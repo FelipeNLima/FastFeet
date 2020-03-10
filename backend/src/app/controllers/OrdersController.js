@@ -2,20 +2,27 @@ import * as Yup from 'yup';
 import { format } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
+import { Op } from 'sequelize';
 import Couriers from '../models/Deliveryman';
 import Recipients from '../models/Recipient';
 import Orders from '../models/Orders';
 
 import ordersdetailsmail from '../jobs/OrderDetailsMail';
 import Queue from '../../lib/Queue';
-
 import Mail from '../../lib/Mail';
 
 class OrdersController {
   async index(req, res) {
+    const { product, page = 1 } = req.query;
+
     const orders = await Orders.findAll({
-      order: ['id'],
+      order: ['created_at', 'DESC'],
       attributes: ['id', 'product'],
+      where: {
+        product: {
+          [Op.iLike]: `%${product}%`,
+        },
+      },
       include: [
         {
           model: Couriers,
@@ -28,6 +35,8 @@ class OrdersController {
           attributes: ['id', 'name'],
         },
       ],
+      limit: 10,
+      offset: (page - 1) * 20,
     });
 
     return res.json(orders);

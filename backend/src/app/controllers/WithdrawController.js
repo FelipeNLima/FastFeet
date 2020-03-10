@@ -56,7 +56,6 @@ class WithdrawController {
         .json({ error: 'Deliveryman already has 5 deliveries on the day!' });
 
     const updated = await delivery.update(req.body);
-    console.log(updated);
     return res.json(updated);
   }
 }

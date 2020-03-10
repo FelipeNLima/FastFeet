@@ -8,13 +8,16 @@ import File from '../models/File';
 
 class DeliveryManController {
   async index(req, res) {
-    const { page = 1 } = req.query;
+    const { name, page = 1 } = req.query;
 
     const deliveryman = await Deliveryman.findAll({
-      order: ['created_at'],
+      order: ['created_at', 'DESC'],
       attributes: ['id', 'name', 'email'],
-      limit: 10,
-      offset: (page - 1) * 20,
+      where: {
+        name: {
+          [Op.iLike]: `%${name}%`,
+        },
+      },
       include: [
         {
           model: File,
@@ -22,6 +25,8 @@ class DeliveryManController {
           attributes: ['id', 'path', 'url'],
         },
       ],
+      limit: 10,
+      offset: (page - 1) * 20,
     });
 
     return res.json(deliveryman);
