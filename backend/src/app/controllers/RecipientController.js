@@ -4,9 +4,10 @@ import Recipient from '../models/Recipient';
 
 class RecipientController {
   async index(req, res) {
-    const { name, page = 1 } = req.query;
+    const { q: name, page = 1 } = req.query;
+    
     const recipient = await Recipient.findAll({
-      order: ['created_at', 'DESC'],
+      order: ['created_at'],
       attributes: [
         'id',
         'name',

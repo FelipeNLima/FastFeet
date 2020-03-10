@@ -8,10 +8,10 @@ import File from '../models/File';
 
 class DeliveryManController {
   async index(req, res) {
-    const { name, page = 1 } = req.query;
+    const { q: name, page = 1 } = req.query;
 
     const deliveryman = await Deliveryman.findAll({
-      order: ['created_at', 'DESC'],
+      order: ['created_at'],
       attributes: ['id', 'name', 'email'],
       where: {
         name: {
@@ -25,7 +25,7 @@ class DeliveryManController {
           attributes: ['id', 'path', 'url'],
         },
       ],
-      limit: 10,
+      limit: 20,
       offset: (page - 1) * 20,
     });
 

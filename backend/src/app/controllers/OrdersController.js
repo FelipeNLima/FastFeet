@@ -13,14 +13,14 @@ import Mail from '../../lib/Mail';
 
 class OrdersController {
   async index(req, res) {
-    const { product, page = 1 } = req.query;
+    const { q: name, page = 1 } = req.query;
 
     const orders = await Orders.findAll({
-      order: ['created_at', 'DESC'],
+      order: ['created_at'],
       attributes: ['id', 'product'],
       where: {
         product: {
-          [Op.iLike]: `%${product}%`,
+          [Op.iLike]: `%${name}%`,
         },
       },
       include: [
