@@ -2,12 +2,12 @@ import { all, call, takeLatest, put } from 'redux-saga/effects';
 
 import { toast } from 'react-toastify';
 
-import { singInSuccess, singFailure } from './actions';
+import { SignInSuccess, SignInFailure } from './actions';
 
 import api from '~/services/api';
 import history from '~/services/history';
 
-export function* singIn({ payload }) {
+export function* signIn({ payload }) {
   const { email, password } = payload;
 
   try {
@@ -20,11 +20,11 @@ export function* singIn({ payload }) {
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
-    yield put(singInSuccess(user, token));
+    yield put(SignInSuccess(user, token));
     history.push('/orders');
   } catch ({ response }) {
     toast.error(response.data.error);
-    yield put(singFailure());
+    yield put(SignInFailure());
   }
 }
 
@@ -39,6 +39,6 @@ export function setToken({ payload }) {
 }
 
 export default all([
-  takeLatest('@auth/SING_IN_REQUEST', singIn),
+  takeLatest('@auth/SIGN_IN_REQUEST', signIn),
   takeLatest('persist/REHYDRATE', setToken),
 ]);

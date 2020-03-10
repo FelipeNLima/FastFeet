@@ -4,7 +4,7 @@ import { persistReducer } from 'redux-persist';
 export default reducer => {
   const persistedReducer = persistReducer(
     {
-      key: '@fastfeet',
+      key: 'fastfeet',
       storage,
       whitelist: ['auth', 'deliveryman'],
     },

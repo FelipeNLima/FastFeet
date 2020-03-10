@@ -1,36 +1,34 @@
 import { produce } from 'immer';
 
 const INITIAL_STATE = {
-  profile: null,
+  details: null,
   loading: false,
 };
 
-export default function deliveryman(state = INITIAL_STATE, action) {
+export default function order(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
-      case '@deliveryman/SHOW_SUCCESS': {
-        console.tron.log(action.payload);
-
+      case '@order/SHOW_SUCCESS': {
         draft.loading = false;
-        draft.profile = action.payload.profile;
+        draft.details = action.payload.details;
         break;
       }
-      case '@deliveryman/SHOW_REQUEST': {
+      case '@order/SHOW_REQUEST': {
         draft.loading = true;
         break;
       }
 
-      case '@deliveryman/UPDATE_REQUEST': {
+      case '@order/UPDATE_REQUEST': {
         draft.loading = true;
         break;
       }
 
-      case '@deliveryman/UPDATE_SUCCESS': {
+      case '@order/UPDATE_SUCCESS': {
         draft.loading = false;
         draft.profile = null;
         break;
       }
-      case '@deliveryman/UPDATE_FAILURE': {
+      case '@order/FAILURE': {
         draft.loading = false;
         break;
       }

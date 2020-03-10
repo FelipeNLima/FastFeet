@@ -3,14 +3,14 @@ import { Switch } from 'react-router-dom';
 
 import Route from './Route';
 
-import SingIn from '~/pages/SingIn';
+import SignIn from '~/pages/SignIn';
 
 import Orders from '~/pages/Orders';
-import NewOrder from '~/pages/Orders/AddOrder';
+import NewOrder from '~/pages/Orders/Add';
 
-import Deliverymen from '~/pages/Deliverymen';
-import NewDeliveryman from '~/pages/Deliverymen/Add';
-import EditDeliveryman from '~/pages/Deliverymen/Edit';
+import Deliveryman from '~/pages/Deliveryman';
+import NewDeliveryman from '~/pages/Deliveryman/Add';
+import EditDeliveryman from '~/pages/Deliveryman/Edit';
 
 import Recipients from '~/pages/Recipients';
 import NewRecipient from '~/pages/Recipients/Add';
@@ -19,14 +19,14 @@ import EditRecipient from '~/pages/Recipients/Edit';
 export default function Routes() {
   return (
     <Switch>
-      <Route path="/" exact component={SingIn} />
+      <Route path="/" exact component={SignIn} />
 
       <Route path="/orders" exact component={Orders} isPrivate />
       <Route path="/orders/new" component={NewOrder} isPrivate />
 
-      <Route path="/deliverymen" exact component={Deliverymen} isPrivate />
-      <Route path="/deliverymen/new" component={NewDeliveryman} isPrivate />
-      <Route path="/deliverymen/edit" component={EditDeliveryman} isPrivate />
+      <Route path="/deliveryman" exact component={Deliveryman} isPrivate />
+      <Route path="/deliveryman/new" component={NewDeliveryman} isPrivate />
+      <Route path="/deliveryman/edit" component={EditDeliveryman} isPrivate />
 
       <Route path="/recipients" exact component={Recipients} isPrivate />
       <Route path="/recipients/new" exact component={NewRecipient} isPrivate />

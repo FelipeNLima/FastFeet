@@ -1,67 +1,59 @@
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { darken } from 'polished';
 
-export const Container = styled.div`
-  background: #fff;
-  padding: 0 30px;
-`;
-
-export const Content = styled.div`
-  height: 64px;
+export const Container = styled.header`
+  margin: 34px 0 15px;
+  height: 100px;
   display: flex;
-  justify-content: space-between;
-  nav {
+  flex-direction: column;
+  h2 {
+    font-size: 24px;
+    color: #444;
+    font-weight: bold;
+  }
+  > div {
+    margin-top: 34px;
     display: flex;
     align-items: center;
-    flex: 1;
-    img {
-      height: 26px;
-      margin-right: 20px;
-      padding-right: 20px;
-      border-right: 1px solid #ddd;
-    }
-    ul {
+    justify-content: space-between;
+    > div {
+      height: 36px;
+      width: 273px;
       display: flex;
       align-items: center;
-      li {
-        margin-right: 21px;
+      border: 1px solid #ddd;
+      padding: 0 15px;
+      background: #fff;
+      border-radius: 4px;
+      input {
+        display: flex;
+        flex: 1;
+        height: 100%;
+        border: 0;
+        color: #444;
+        &::placeholder {
+          color: #999;
+        }
       }
     }
   }
-  aside {
+  button {
+    height: 36px;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    flex: 1;
-    strong {
-      display: block;
-      color: #444;
-      width: 120px;
-      text-align: right;
-    }
-    button {
-      display: block;
-      margin-top: 2px;
-      border: 0;
-      background: none;
-      color: #de3b3b;
-      font-size: 14px;
-      text-align: right;
-      width: 120px;
+    justify-content: center;
+    padding: 0 15px;
+    background: #7d40e7;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    border: 0;
+    border-radius: 4px;
+    &:hover {
+      background: ${darken(0.08, '#7d40e7')};
     }
   }
-`;
-
-export const Nav = styled(NavLink).attrs({
-  activeStyle: {
-    color: '#444',
-  },
-})`
-  font-size: 15px;
-  font-weight: bold;
-  color: #999;
-  transition: color 0.2s;
-  &:hover {
-    color: #444;
+  svg {
+    margin-right: 5px;
   }
 `;
