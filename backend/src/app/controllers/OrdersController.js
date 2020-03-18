@@ -3,10 +3,10 @@ import { format } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
 import { Op } from 'sequelize';
-import Couriers from '../models/Deliveryman';
+import Deliveryman from '../models/Deliveryman';
 import Recipients from '../models/Recipient';
 import Orders from '../models/Orders';
-
+import File from '../models/File';
 import ordersdetailsmail from '../jobs/OrderDetailsMail';
 import Queue from '../../lib/Queue';
 import Mail from '../../lib/Mail';
@@ -17,7 +17,7 @@ class OrdersController {
 
     const orders = await Orders.findAll({
       order: ['created_at'],
-      attributes: ['id', 'product'],
+      attributes: ['id', 'product', 'canceled_at', 'start_date', 'end_date'],
       where: {
         product: {
           [Op.iLike]: `%${name}%`,
@@ -25,14 +25,21 @@ class OrdersController {
       },
       include: [
         {
-          model: Couriers,
-          as: 'delivery',
+          model: Deliveryman,
+          as: 'deliveryman',
           attributes: ['id', 'name', 'email'],
+          include: [
+            {
+              model: File,
+              as: 'avatar',
+              attributes: ['url', 'path'],
+            },
+          ],
         },
         {
           model: Recipients,
           as: 'recipient',
-          attributes: ['id', 'name'],
+          attributes: ['id', 'name', 'city', 'state'],
         },
       ],
       limit: 10,
@@ -40,6 +47,59 @@ class OrdersController {
     });
 
     return res.json(orders);
+  }
+
+  async show(req, res) {
+    const { id } = req.params;
+
+    const order = await Orders.findByPk(id, {
+      where: {
+        canceled_at: null,
+      },
+      attributes: [
+        'id',
+        'recipient_id',
+        'deliveryman_id',
+        'product',
+        'canceled_at',
+        'start_date',
+        'end_date',
+      ],
+      include: [
+        {
+          model: Deliveryman,
+          as: 'deliveryman',
+          attributes: ['id', 'name'],
+          include: [
+            {
+              model: File,
+              as: 'avatar',
+              attributes: ['url', 'path'],
+            },
+          ],
+        },
+        {
+          model: Recipients,
+          as: 'recipient',
+          attributes: [
+            'id',
+            'name',
+            'street',
+            'number',
+            'city',
+            'state',
+            'postalcode',
+          ],
+        },
+        {
+          model: File,
+          as: 'signature',
+          attributes: ['url', 'path'],
+        },
+      ],
+    });
+
+    return res.json(order);
   }
 
   async store(req, res) {
@@ -55,7 +115,7 @@ class OrdersController {
       });
     }
 
-    const deliverymanExists = await Couriers.findOne({
+    const deliverymanExists = await Orders.findOne({
       where: {
         id: req.body.deliveryman_id,
       },
@@ -114,7 +174,7 @@ class OrdersController {
         attributes: ['id', 'product'],
         include: [
           {
-            model: Couriers,
+            model: Orders,
             as: 'delivery',
             attributes: ['name', 'email'],
           },
@@ -139,7 +199,7 @@ class OrdersController {
       const orders = await Orders.findByPk(req.params.id, {
         include: [
           {
-            model: Couriers,
+            model: Orders,
             as: 'delivery',
             attributes: ['id', 'name', 'email'],
           },

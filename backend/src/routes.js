@@ -19,7 +19,7 @@ const upload = multer(multerConfig);
 
 routes.post('/sessions', SessionController.store);
 
-routes.get('/deliveryman/:id/deliveries', DeliveryManController.show);
+routes.get('/deliveryman/:id', DeliveryManController.show);
 
 // Entrada na Encomenda
 routes.put(
@@ -48,6 +48,7 @@ routes.get('/recipients', RecipientController.index);
 routes.post('/recipients', RecipientController.store);
 routes.put('/recipients/:id', RecipientController.update);
 routes.delete('/recipients/:id', RecipientController.delete);
+routes.get('/recipients/:id', RecipientController.show);
 
 // Gestão de entregadores
 routes.get('/deliveryman', DeliveryManController.index);
@@ -60,7 +61,7 @@ routes.get('/orders', OrdersController.index);
 routes.post('/orders', OrdersController.store);
 routes.put('/orders/:id', OrdersController.update);
 routes.delete('/orders/:id', OrdersController.delete);
-
+routes.get('/orders/:id', OrdersController.show);
 // Gestão de Problemas com a Encomenda
 routes.get('/problems', DeliveryProblemController.index);
 routes.get('/problems/:id', DeliveryProblemController.show);

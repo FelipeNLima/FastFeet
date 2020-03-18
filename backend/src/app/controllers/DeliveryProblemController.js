@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { Op } from 'sequelize';
 
 import File from '../models/File';
 import Orders from '../models/Orders';
@@ -11,20 +12,20 @@ import CancellationMail from '../jobs/CancellationMail';
 
 class DeliveryProblemController {
   async index(req, res) {
+    const { q: name, page = 1 } = req.query;
     const problems = await DeliveryProblem.findAll({
-      order: ['created_at', 'updated_at'],
+      order: ['created_at'],
       attributes: ['id', 'delivery_id', 'description'],
+      where: {
+        description: {
+          [Op.iLike]: `%${name}%`,
+        },
+      },
       include: [
         {
           model: Orders,
           as: 'delivery',
-          attributes: [
-            'id',
-            'product',
-            'canceled_at',
-            'start_date',
-            'end_date',
-          ],
+          attributes: ['id', 'product'],
           include: [
             {
               model: Recipient,
@@ -60,6 +61,8 @@ class DeliveryProblemController {
           ],
         },
       ],
+      limit: 20,
+      offset: (page - 1) * 20,
     });
 
     return res.json(problems);
@@ -70,10 +73,10 @@ class DeliveryProblemController {
 
     const problems = await DeliveryProblem.findAll({
       where: {
-        id_delivery: id,
+        delivery_id: id,
       },
       order: ['created_at', 'updated_at'],
-      attributes: ['id', 'id_delivery', 'description'],
+      attributes: ['id', 'delivery_id ', 'description'],
       include: [
         {
           model: Orders,
@@ -126,15 +129,17 @@ class DeliveryProblemController {
   }
 
   async store(req, res) {
+    const { delivery_id } = req.params;
+    const { description } = req.body;
+
+    console.log(description, delivery_id);
+
     const schema = Yup.object().shape({
       description: Yup.string().required(),
     });
 
     if (!(await schema.isValid(req.body)))
       return res.status(400).json({ error: 'Validation fails' });
-
-    const { delivery_id } = req.params;
-    const { description } = req.body;
 
     const delivery = await Orders.findByPk(delivery_id, {
       attributes: ['id', 'product', 'canceled_at', 'start_date', 'end_date'],
@@ -175,12 +180,12 @@ class DeliveryProblemController {
 
     if (!delivery) return res.status(400).json({ error: 'Delivery not found' });
 
-    const { id } = await DeliveryProblem.create({ id_delivery, description });
+    const { id } = await DeliveryProblem.create({ delivery_id, description });
 
     return res.json({
       problem: {
         id,
-        delivery,
+        delivery_id,
         description,
       },
     });

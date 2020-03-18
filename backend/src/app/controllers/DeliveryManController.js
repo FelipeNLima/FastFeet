@@ -2,8 +2,6 @@ import * as Yup from 'yup';
 import { Op } from 'sequelize';
 
 import Deliveryman from '../models/Deliveryman';
-import Recipient from '../models/Recipient';
-import Orders from '../models/Orders';
 import File from '../models/File';
 
 class DeliveryManController {
@@ -33,72 +31,93 @@ class DeliveryManController {
   }
 
   async show(req, res) {
-    const schema = await Yup.object().shape({
-      id: Yup.number().required(),
-    });
-
-    if (!(await schema.isValid(req.params)))
-      return res.status(400).json({ error: 'Validation fails' });
-
     const { id } = req.params;
-    const { delivered = 'true', page = 1 } = req.query;
 
-    const deliveryman = await Deliveryman.findByPk(id);
-
-    if (!deliveryman)
-      return res.status(400).json({ error: 'Deliveryman is not Exists' });
-
-    const deliveries = await Orders.findAll({
-      where: {
-        deliveryman_id: id,
-        canceled_at: null,
-        end_date:
-          delivered === 'true'
-            ? {
-              [Op.ne]: null,
-            }
-            : null,
-      },
-      limit: 10,
-      offset: (page - 1) * 20,
-      attributes: ['id', 'product', 'canceled_at', 'start_date', 'end_date'],
+    const deliveryman = await Deliveryman.findByPk(id, {
+      attributes: ['id', 'name', 'email', 'created_at'],
       include: [
         {
           model: File,
-          as: 'signature',
-          attributes: ['id', 'name', 'path', 'url'],
-        },
-        {
-          model: Deliveryman,
-          as: 'deliveryman',
-          attributes: ['id', 'name', 'email'],
-          include: [
-            {
-              model: File,
-              as: 'avatar',
-              attributes: ['id', 'name', 'path', 'url'],
-            },
-          ],
-        },
-        {
-          model: Recipient,
-          as: 'recipient',
-          attributes: [
-            'id',
-            'name',
-            'street',
-            'number',
-            'complement',
-            'state',
-            'city',
-            'postalcode',
-          ],
+          as: 'avatar',
+          attributes: ['id', 'path', 'url'],
         },
       ],
     });
 
-    return res.json(deliveries);
+    if (!deliveryman) {
+      return res.status(400).json({ error: 'Delivery man does not exists' });
+    }
+
+    return res.json(deliveryman);
   }
+
+  // async show(req, res) {
+  //   const schema = await Yup.object().shape({
+  //     id: Yup.number().required(),
+  //   });
+
+  //   if (!(await schema.isValid(req.params)))
+  //     return res.status(400).json({ error: 'Validation fails' });
+
+  //   const { id } = req.params;
+  //   const { delivered = 'true', page = 1 } = req.query;
+
+  //   const deliveryman = await Deliveryman.findByPk(id);
+
+  //   if (!deliveryman)
+  //     return res.status(400).json({ error: 'Deliveryman is not Exists' });
+
+  //   const deliveries = await Orders.findAll({
+  //     where: {
+  //       deliveryman_id: id,
+  //       canceled_at: null,
+  //       end_date:
+  //         delivered === 'true'
+  //           ? {
+  //             [Op.ne]: null,
+  //           }
+  //           : null,
+  //     },
+  //     limit: 10,
+  //     offset: (page - 1) * 20,
+  //     attributes: ['id', 'product', 'canceled_at', 'start_date', 'end_date'],
+  //     include: [
+  //       {
+  //         model: File,
+  //         as: 'signature',
+  //         attributes: ['id', 'name', 'path', 'url'],
+  //       },
+  //       {
+  //         model: Deliveryman,
+  //         as: 'deliveryman',
+  //         attributes: ['id', 'name', 'email'],
+  //         include: [
+  //           {
+  //             model: File,
+  //             as: 'avatar',
+  //             attributes: ['id', 'name', 'path', 'url'],
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         model: Recipient,
+  //         as: 'recipient',
+  //         attributes: [
+  //           'id',
+  //           'name',
+  //           'street',
+  //           'number',
+  //           'complement',
+  //           'state',
+  //           'city',
+  //           'postalcode',
+  //         ],
+  //       },
+  //     ],
+  //   });
+
+  //   return res.json(deliveries);
+  // }
 
   async store(req, res) {
     const schema = Yup.object().shape({
