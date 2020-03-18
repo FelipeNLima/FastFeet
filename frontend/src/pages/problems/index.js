@@ -20,7 +20,7 @@ export default function Problems() {
   // const dispatch = useDispatch();
 
   useEffect(() => {
-    async function loadproblemsn() {
+    async function loadproblems() {
       setPage(1);
       const response = await api.get('/problems', {
         params: {
@@ -30,7 +30,7 @@ export default function Problems() {
       });
       setproblems(response.data);
     }
-    loadproblemsn();
+    loadproblems();
   }, [name, page]);
 
   return (
