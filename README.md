@@ -145,4 +145,4 @@ $ react-native run-android
 
 ---
 
-Made with :heart: by Felipe Lima :smiley: [Get in touch!](https://www.linkedin.com/in/felipe-lima-00bb62171/)
+Made with by Felipe Lima :smiley: [Get in touch!](https://www.linkedin.com/in/felipe-lima-00bb62171/)
