@@ -46,7 +46,21 @@ export const View = styled.div`
     color: #444444;
   }
   input {
-    height: 40px;
+    height: 10px;
+  }
+`;
+
+export const ViewProdut = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  strong {
+    margin: 15px 7px 4px;
+    font-size: 14px;
+    color: #444444;
+  }
+  input {
+    height: 30px;
   }
 `;
 

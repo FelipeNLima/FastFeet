@@ -3,9 +3,15 @@ import { all, takeLatest, call, put } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 
 import api from '~/services/api';
-
-import { showOrderSuccess, updateOrderSuccess, orderFailure } from './actions';
 import history from '~/services/history';
+
+import {
+  showOrderSuccess,
+  updateOrderSuccess,
+  orderFailure,
+  registerOrderSuccess,
+  registerOrderFailure,
+} from './actions';
 
 export function* showOrder({ payload }) {
   const { id } = payload;
@@ -52,7 +58,28 @@ export function* updateOrder({ payload }) {
   }
 }
 
+export function* registerOrder({ payload }) {
+  const { recipient_id, deliveryman_id, product } = payload.data;
+
+  try {
+    yield call(api.post, '/orders', {
+      recipient_id,
+      deliveryman_id,
+      product,
+    });
+
+    yield put(registerOrderSuccess());
+
+    toast.success('Order created successful!');
+    history.push('/orders');
+  } catch ({ response }) {
+    toast.error(response.data.error);
+    yield put(registerOrderFailure());
+  }
+}
+
 export default all([
   takeLatest('@order/SHOW_REQUEST', showOrder),
   takeLatest('@order/UPDATE_REQUEST', updateOrder),
+  takeLatest('@order/REGISTER_REQUEST', registerOrder),
 ]);

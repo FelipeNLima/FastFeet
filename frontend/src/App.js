@@ -3,7 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './config/ReactotronConfig';
 
 import Routes from '~/routes';

@@ -7,6 +7,7 @@ import SignIn from '~/pages/SignIn';
 
 import Orders from '~/pages/Orders';
 import OrderAdd from '~/pages/Orders/Add';
+import OrderEdit from '~/pages/Orders/Edit';
 
 import Deliveryman from '~/pages/Deliveryman';
 import DeliverymanAdd from '~/pages/Deliveryman/Add';
@@ -25,6 +26,7 @@ export default function Routes() {
 
       <Route path="/orders" exact component={Orders} isPrivate />
       <Route path="/orders/add" exact component={OrderAdd} isPrivate />
+      <Route path="/orders/edit" exact component={OrderEdit} isPrivate />
 
       <Route path="/deliveryman" exact component={Deliveryman} isPrivate />
       <Route path="/deliveryman/add" exact component={DeliverymanAdd} isPrivate />

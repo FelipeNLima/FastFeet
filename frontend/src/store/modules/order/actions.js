@@ -5,10 +5,29 @@ export function showOrderRequest(id) {
   };
 }
 
-export function showOrderSuccess(details) {
+export function showOrderSuccess(data) {
   return {
     type: '@order/SHOW_SUCCESS',
-    payload: { details },
+    payload: { data },
+  };
+}
+
+export function registerOrderRequest(data) {
+  return {
+    type: '@order/REGISTER_REQUEST',
+    payload: { data },
+  };
+}
+
+export function registerOrderSuccess() {
+  return {
+    type: '@order/REGISTER_SUCCESS',
+  };
+}
+
+export function registerOrderFailure() {
+  return {
+    type: '@order/REGISTER_FAILURE',
   };
 }
 

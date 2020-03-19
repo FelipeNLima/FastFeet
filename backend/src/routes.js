@@ -65,7 +65,10 @@ routes.get('/orders/:id', OrdersController.show);
 // Gestão de Problemas com a Encomenda
 routes.get('/problems', DeliveryProblemController.index);
 routes.get('/problems/:id', DeliveryProblemController.show);
-routes.put('/problems/:id/cancel-delivery', DeliveryProblemController.update);
+routes.delete(
+  '/problems/:id/cancel-delivery',
+  DeliveryProblemController.delete
+);
 
 // Imagem de Avatar Entregadores
 routes.post('/files', upload.single('file'), FileController.store);

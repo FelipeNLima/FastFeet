@@ -71,58 +71,8 @@ class DeliveryProblemController {
   async show(req, res) {
     const { id } = req.params;
 
-    const problems = await DeliveryProblem.findAll({
-      where: {
-        delivery_id: id,
-      },
-      order: ['created_at', 'updated_at'],
-      attributes: ['id', 'delivery_id ', 'description'],
-      include: [
-        {
-          model: Orders,
-          as: 'delivery',
-          attributes: [
-            'id',
-            'product',
-            'canceled_at',
-            'start_date',
-            'end_date',
-          ],
-          include: [
-            {
-              model: Recipient,
-              as: 'recipient',
-              attributes: [
-                'id',
-                'name',
-                'street',
-                'number',
-                'complement',
-                'state',
-                'city',
-                'postalcode',
-              ],
-            },
-            {
-              model: Deliveryman,
-              as: 'deliveryman',
-              attributes: ['id', 'name', 'email'],
-              include: [
-                {
-                  model: File,
-                  as: 'avatar',
-                  attributes: ['id', 'name', 'path', 'url'],
-                },
-              ],
-            },
-            {
-              model: File,
-              as: 'signature',
-              attributes: ['id', 'name', 'path', 'url'],
-            },
-          ],
-        },
-      ],
+    const problems = await DeliveryProblem.findByPk(id, {
+      attributes: ['id', 'delivery_id', 'description'],
     });
 
     return res.json(problems);
@@ -131,8 +81,6 @@ class DeliveryProblemController {
   async store(req, res) {
     const { delivery_id } = req.params;
     const { description } = req.body;
-
-    console.log(description, delivery_id);
 
     const schema = Yup.object().shape({
       description: Yup.string().required(),
@@ -191,11 +139,11 @@ class DeliveryProblemController {
     });
   }
 
-  async update(req, res) {
+  async delete(req, res) {
     const { id } = req.params;
 
     const problem = await DeliveryProblem.findByPk(id, {
-      attributes: ['id', 'id_delivery', 'description'],
+      attributes: ['id', 'delivery_id', 'description'],
       include: [
         {
           model: Orders,
@@ -215,10 +163,11 @@ class DeliveryProblemController {
                 'id',
                 'name',
                 'street',
+                'number',
                 'complement',
-                'house',
-                'zipcode',
+                'state',
                 'city',
+                'postalcode',
               ],
             },
             {
@@ -245,9 +194,9 @@ class DeliveryProblemController {
 
     if (!problem) return res.status(400).json({ error: 'Problem not found' });
 
-    const { id_delivery } = problem;
+    const { delivery_id } = problem;
 
-    const delivery = await Orders.findByPk(id_delivery);
+    const delivery = await Orders.findByPk(delivery_id);
 
     if (!delivery) return res.status(400).json({ error: 'Delivery not found' });
 
@@ -259,6 +208,7 @@ class DeliveryProblemController {
       problem,
     });
 
+    await problem.destroy();
     return res.json(delivery);
   }
 }

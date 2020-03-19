@@ -35,7 +35,7 @@ export default function Deliveryman() {
 
   useEffect(() => {
     loadDeliveryman();
-  }, [name, page]);
+  }, []);
 
   async function handleDelete(id) {
     const confirm = window.confirm('Tem certeza de que deseja excluir este entregador ?');

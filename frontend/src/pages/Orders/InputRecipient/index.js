@@ -9,15 +9,18 @@ import api from '~/services/api';
 
 export default function RecipientInput({ ...rest }) {
   const [recipients, setRecipients] = useState([]);
+  const [page, setPage] = useState(1);
 
   const recipientRef = useRef(null);
   const { fieldName, defaultValue, registerField } = useField('recipient');
 
   useEffect(() => {
     async function loadData() {
+      setPage(1);
       const response = await api.get('/recipients', {
         params: {
-          name: '',
+          q: '',
+          page,
         },
       });
 
@@ -29,7 +32,7 @@ export default function RecipientInput({ ...rest }) {
       setRecipients(data);
     }
     loadData();
-  }, []);
+  }, [page]);
 
   const filterColors = inputValue => {
     return recipients.filter(i =>
@@ -57,22 +60,29 @@ export default function RecipientInput({ ...rest }) {
           if (!ref.select.state.value) {
             return '';
           }
-
           return ref.select.state.value.value;
         }
+      },
+      clearValue(ref) {
+        ref.select.select.clearValue();
+      },
+      setValue(ref, value) {
+        ref.select.select.setValue(value);
       },
     });
   }, [fieldName, registerField, rest.isMulti]);
 
   return (
     <AsyncSelect
+      name="recipient_id"
       cacheOptions
       defaultOptions={recipients}
       loadOptions={promiseOptions}
       defaultValue={defaultValue}
-      placeholder="Destinatário"
+      placeholder="Destinatário exemplo "
       ref={recipientRef}
       classNamePrefix="react-select"
+      noOptionsMessage={() => 'Nenhum entregador encontrado'}
       {...rest}
     />
   );

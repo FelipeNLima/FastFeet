@@ -1,33 +1,39 @@
 import React from 'react';
 
 import * as Yup from 'yup';
-import { useSelector } from 'react-redux';
-
+import { useSelector, useDispatch } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
 
 import history from '~/services/history';
-import RecipientInput from '~/pages/Orders/RecipientInput';
-import DeliverymanInput from '~/pages/Orders/DeliverymanInput';
+import RecipientInput from '~/pages/Orders/InputRecipient';
+import DeliverymanInput from '~/pages/Orders/InputDeliveryman';
 import { MdChevronLeft, MdCheck } from 'react-icons/md';
 
-import { Container, BackButton, Content, Button, View } from './styles';
+import { Container, BackButton, Content, Button, View, ViewProdut } from './styles';
+import { registerOrderRequest } from '~/store/modules/order/actions';
 
 export default function Add() {
+  const dispatch = useDispatch();
   const loading = useSelector(state => state.order.loading);
 
   const schema = Yup.object().shape({
-    recipient_id: Yup.number().required('Informe o detinatário'),
-    deliveryman_id: Yup.number().required('Informe o entregador'),
-    product: Yup.number().required('O produto é obrigatório'),
+    product: Yup.string().required('O produto é obrigatório'),
+    recipient_id: Yup.string().required('O destinatário é obrigatório'),
+		deliveryman_id: Yup.string().required('O entregador é obrigatório'),
   });
 
-  function handleSubmit({ recipient_id, deliveryman_id, product }) {
-
+  async function handleSubmit({recipient_id, deliveryman_id, product}) {
+    const data = {
+      recipient_id,
+      deliveryman_id,
+      product
+    };
+    console.log(dispatch(registerOrderRequest(data)));
   }
 
   return (
     <Container>
-      <Form onSubmit={handleSubmit} schema={schema}>
+      <Form schema={schema} onSubmit={handleSubmit}>
         <header>
           <h2>Cadastrar Encomenda</h2>
 
@@ -61,10 +67,10 @@ export default function Add() {
             </View>
           </main>
 
-          <View>
+          <ViewProdut>
             <strong>Produto</strong>
             <Input name="product" />
-          </View>
+          </ViewProdut>
         </Content>
       </Form>
     </Container>

@@ -1,6 +1,4 @@
 import * as Yup from 'yup';
-import { format } from 'date-fns';
-import pt from 'date-fns/locale/pt';
 
 import { Op } from 'sequelize';
 import Deliveryman from '../models/Deliveryman';
@@ -9,7 +7,6 @@ import Orders from '../models/Orders';
 import File from '../models/File';
 import ordersdetailsmail from '../jobs/OrderDetailsMail';
 import Queue from '../../lib/Queue';
-import Mail from '../../lib/Mail';
 
 class OrdersController {
   async index(req, res) {
@@ -17,7 +14,14 @@ class OrdersController {
 
     const orders = await Orders.findAll({
       order: ['created_at'],
-      attributes: ['id', 'product', 'canceled_at', 'start_date', 'end_date'],
+      attributes: [
+        'id',
+        'product',
+        'canceled_at',
+        'start_date',
+        'end_date',
+        'status',
+      ],
       where: {
         product: {
           [Op.iLike]: `%${name}%`,
@@ -143,18 +147,6 @@ class OrdersController {
       req.body
     );
 
-    // const date = new Date();
-
-    // await Mail.sendMail({
-    //   to: `${deliverymanExists.name} <${deliverymanExists.email}>`,
-    //   subject: 'Encomenda Cadastrada',
-    //   template: 'orderdetails',
-    //   context: {
-    //     deliveryman: deliverymanExists.name,
-    //     product: req.body.product,
-    //     date: format(date, "'dia' dd 'de' MMMM', às' H:mm'h'", { locale: pt }),
-    //   },
-    // });
 
     await Queue.add(ordersdetailsmail.key, {
       deliverymanExists,
