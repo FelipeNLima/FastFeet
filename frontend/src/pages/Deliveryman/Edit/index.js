@@ -27,8 +27,6 @@ export default function Edit() {
       .required('O e-mail é obrigatório'),
   });
 
-  console.log(deliveryman);
-
   function handleSubmit({ name, email, avatar_id }) {
     const data = {
       id: deliveryman.id,
@@ -36,8 +34,6 @@ export default function Edit() {
       email,
       avatar_id,
     };
-
-    console.log(data);
     dispatch(updateDeliverymanRequest(data));
   }
 

@@ -43,13 +43,17 @@ export function* showOrder({ payload }) {
 }
 
 export function* updateOrder({ payload }) {
-  const { id, data } = payload;
+  const { id, recipient_id, deliveryman_id, product } = payload.data;
 
   try {
-    yield call(api.put, `/orders/${id}`, data);
+    yield call(api.put, `/orders/${id}`, {
+      id,
+      recipient_id,
+      deliveryman_id,
+      product,
+    });
 
     yield put(updateOrderSuccess());
-
     toast.success('Update order successful');
     history.push('/orders');
   } catch ({ response }) {

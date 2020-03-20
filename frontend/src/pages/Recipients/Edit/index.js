@@ -44,7 +44,6 @@ export default function Edit() {
       state,
       postalcode,
     };
-    console.log(data);
     dispatch(updateRecipientRequest(data));
   }
 

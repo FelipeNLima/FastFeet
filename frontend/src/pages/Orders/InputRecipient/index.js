@@ -7,12 +7,12 @@ import AsyncSelect from 'react-select/async';
 
 import api from '~/services/api';
 
-export default function RecipientInput({ ...rest }) {
+export default function RecipientInput({ name, ...rest }) {
   const [recipients, setRecipients] = useState([]);
   const [page, setPage] = useState(1);
 
   const recipientRef = useRef(null);
-  const { fieldName, defaultValue, registerField } = useField('recipient');
+  const { fieldName, defaultValue, registerField } = useField(name);
 
   useEffect(() => {
     async function loadData() {
@@ -39,7 +39,6 @@ export default function RecipientInput({ ...rest }) {
       i.label.toLowerCase().includes(inputValue.toLowerCase())
     );
   };
-
   const promiseOptions = inputValue =>
     new Promise(resolve => {
       resolve(filterColors(inputValue));
@@ -47,7 +46,7 @@ export default function RecipientInput({ ...rest }) {
 
   useEffect(() => {
     registerField({
-      name: 'recipient_id',
+      name: fieldName,
       ref: recipientRef.current,
       path: 'select.state.value',
       getValue: ref => {
@@ -63,18 +62,11 @@ export default function RecipientInput({ ...rest }) {
           return ref.select.state.value.value;
         }
       },
-      clearValue(ref) {
-        ref.select.select.clearValue();
-      },
-      setValue(ref, value) {
-        ref.select.select.setValue(value);
-      },
     });
   }, [fieldName, registerField, rest.isMulti]);
 
   return (
     <AsyncSelect
-      name="recipient_id"
       cacheOptions
       defaultOptions={recipients}
       loadOptions={promiseOptions}

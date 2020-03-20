@@ -31,10 +31,10 @@ export function registerOrderFailure() {
   };
 }
 
-export function updateOrderRequest(id, data) {
+export function updateOrderRequest(data) {
   return {
     type: '@order/UPDATE_REQUEST',
-    payload: { id, data },
+    payload: { data },
   };
 }
 

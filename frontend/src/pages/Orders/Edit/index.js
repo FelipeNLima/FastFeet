@@ -10,10 +10,11 @@ import DeliverymanInput from '~/pages/Orders/InputDeliveryman';
 import { MdChevronLeft, MdCheck } from 'react-icons/md';
 
 import { Container, BackButton, Content, Button, View, ViewProdut } from './styles';
-import { registerOrderRequest } from '~/store/modules/order/actions';
+import { updateOrderRequest } from '~/store/modules/order/actions';
 
 export default function Edit() {
   const dispatch = useDispatch();
+  const orders = useSelector(state => state.order.order);
   const loading = useSelector(state => state.order.loading);
 
   const schema = Yup.object().shape({
@@ -22,16 +23,26 @@ export default function Edit() {
     product: Yup.string().required('O produto é obrigatório'),
   });
 
-  function handleSubmit(data) {
+  function handleSubmit({
+    id,
+    recipient_id,
+    deliveryman_id,
+    product, }) {
+    const data = {
+      id: orders.id,
+      recipient_id,
+      deliveryman_id,
+      product
+    };
     console.log(data);
-    console.log(dispatch(registerOrderRequest(data)));
+    dispatch(updateOrderRequest(data));
   }
 
   return (
     <Container>
-      <Form schema={schema} onSubmit={handleSubmit}>
+      <Form initialData={orders} schema={schema} onSubmit={handleSubmit}>
         <header>
-          <h2>Cadastrar Encomenda</h2>
+          <h2>Editar Encomenda</h2>
 
           <div>
             <BackButton type="button" onClick={() => history.push('/orders')}>

@@ -46,8 +46,8 @@ class OrdersController {
           attributes: ['id', 'name', 'city', 'state'],
         },
       ],
-      limit: 10,
-      offset: (page - 1) * 20,
+      limit: 5,
+      offset: (page - 1) * 5,
     });
 
     return res.json(orders);
@@ -146,7 +146,6 @@ class OrdersController {
     const { id, recipient_id, deliveryman_id, product } = await Orders.create(
       req.body
     );
-
 
     await Queue.add(ordersdetailsmail.key, {
       deliverymanExists,

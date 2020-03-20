@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { Container, ProblemTitle, ProblemMenu } from './styles';
 import Modal from 'react-bootstrap/Modal';
+// import Pagination from 'react-bootstrap/Pagination';
 import api from '~/services/api';
 import {
   MdVisibility,
@@ -10,6 +11,7 @@ import {
 } from 'react-icons/md';
 
 import Header from '~/components/Header';
+import Pagination from '~/components/Pagination';
 import { toast } from 'react-toastify';
 
 export default function Problems() {
@@ -23,7 +25,6 @@ export default function Problems() {
   const handleShow = () => setShow(true);
 
   async function loadproblems() {
-    setPage(1);
     const response = await api.get('/problems', {
       params: {
         q: name,
@@ -31,11 +32,12 @@ export default function Problems() {
       },
     });
     setproblems(response.data);
+    setPage(response.data.length);
   }
 
   useEffect(() => {
     loadproblems();
-  }, []);
+  }, [page, name]);
 
   async function handleShowProblem(id) {
     const response = await api.get(`/problems/${id}`);
@@ -126,6 +128,7 @@ export default function Problems() {
           ))}
         </tbody>
       </table>
+      <Pagination loadItems={loadproblems} itemsLenght={page} />
 
       {/* modal */}
       <Modal show={show} onHide={handleClose} centered>

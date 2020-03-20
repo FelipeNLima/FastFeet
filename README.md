@@ -109,6 +109,9 @@ $ yarn sequelize db:migrate
 
 # Run the Backend
 $ yarn dev
+
+#Run the Queue for sending email
+$ yarn queue
 ```
 
 #### Frontend

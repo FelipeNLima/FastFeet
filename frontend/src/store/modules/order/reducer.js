@@ -2,6 +2,7 @@ import { produce } from 'immer';
 
 const INITIAL_STATE = {
   order: null,
+  view: null,
   loading: false,
 };
 

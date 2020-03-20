@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { Container } from './styles';
 
 import Header from '~/components/Header';
+import Pagination from '~/components/Pagination';
 import Menu from '~/components/Menu';
 
 import api from '~/services/api';
@@ -22,15 +23,14 @@ export default function Recipients() {
   const dispatch = useDispatch();
 
   async function loadRecipients() {
-    setPage(1);
     const response = await api.get('/recipients', {
       params: {
         q: name,
         page,
       },
     });
-
     setRecipients(response.data);
+    setPage(response.data.length);
   }
 
   useEffect(() => {
@@ -140,6 +140,7 @@ export default function Recipients() {
           ))}
         </tbody>
       </table>
+      <Pagination loadItems={loadRecipients} itemsLenght={page} />
     </Container>
   );
 }

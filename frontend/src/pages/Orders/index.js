@@ -22,6 +22,7 @@ import { Container } from './styles';
 import Menu from '~/components/Menu';
 import Header from '~/components/Header';
 import Badge from '~/components/Badge';
+import Pagination from '~/components/Pagination';
 
 import { showOrderRequest } from '~/store/modules/order/actions';
 
@@ -32,15 +33,18 @@ export default function Orders() {
   const [orders, setOrders] = useState([]);
   const [name, setName] = useState('');
   const [show, setShow] = useState(false);
-  const [description, setDescription] = useState([]);
+  const [showfilter, setShowfilter] = useState(false);
+  const [problems, setproblems] = useState([]);
+  const [description, setDescription] = useState({});
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleShowFilter = () => setShowfilter(true);
+  const handleClosefilter = () => setShowfilter(false);
 
   const dispatch = useDispatch();
 
   async function loadOrders() {
-    setPage(1);
     const response = await api.get('/orders', {
       params: {
         q: name,
@@ -48,17 +52,23 @@ export default function Orders() {
       },
     });
     setOrders(response.data);
+    setPage(response.data.length);
   }
 
   useEffect(() => {
     loadOrders();
-  }, [name, page]);
+  }, []);
+
 
   async function handleshow(id) {
     const response = await api.get(`/orders/${id}`);
 
     const order = {
-      ...response.data,
+      street: response.data.recipient.street,
+      number: response.data.recipient.number,
+      city: response.data.recipient.city,
+      state: response.data.recipient.state,
+      postalcode: response.data.recipient.postalcode,
       formatedStartDate: response.data.start_date
         ? format(parseISO(response.data.start_date), 'dd/MM/yyyy', {
           locale: ptBR,
@@ -70,11 +80,21 @@ export default function Orders() {
         })
         : null,
     };
-
-    console.log(setDescription(order));
+    setDescription(order);
+    handleShow();
   }
 
-  async function handlefilterproblems() { }
+  async function handlefilterproblems() {
+    setPage(1);
+    const response = await api.get('/problems', {
+      params: {
+        q: name,
+        page,
+      },
+    });
+    setproblems(response.data);
+    handleShowFilter();
+  }
 
   async function handleDelete(id) {
     const confirm = window.confirm(
@@ -106,7 +126,7 @@ export default function Orders() {
               placeholder="Buscar por encomendas"
             />
           </div>
-          <button onClick={() => handlefilterproblems} type="button">
+          <button onClick={() => handlefilterproblems()} type="button">
             <MdFilterList size={22} color="#fff" /> FILTRAR PROBLEMAS
           </button>
           <button onClick={() => history.push('/orders/add')} type="button">
@@ -208,33 +228,52 @@ export default function Orders() {
           ))}
         </tbody>
       </table>
+      <Pagination loadItems={loadOrders} itemsLenght={page} />
 
-      {/* modal */}
+      {/* modal to View*/}
       <Modal show={show} onHide={handleClose} centered>
-        {/* <Modal.Header closeButton>
+        <Modal.Header closeButton>
           <strong>Informações da encomenda</strong>
-          <p>{description.recipient.street}, {description.recipient.number}</p>
-          <p>{description.recipient.city} - {description.recipient.state}</p>
-          <p>{description.recipient.postalcode}</p>
         </Modal.Header>
         <Modal.Body>
+          <p>{description.street} - {description.number}</p>
+          <p>{description.city} - {description.state}</p>
+          <p>{description.postalcode}</p>
+
           <strong>Dados</strong>
-          {/* <p>Retirada: {order.formatedStartDate ? order.formatedStartDate : '--/--/----'}</p>
-          <p>Entrega: {order.formatedEndDate ? order.formatedEndDate : '--/--/----'}</p> */}
-        {/* </Modal.Body>
-        <Modal.Footer>
+          <br />
+          <p>Retirada: {description.formatedStartDate ? description.formatedStartDate : '--/--/----'}</p>
+          <p>Entrega: {description.formatedEndDate ? description.formatedEndDate : '--/--/----'}</p>
+
           <strong>Assinatura do destinatario</strong>
-          <img
-            src={
-              description.signature
-                ? description.signature.url
-                : loading
-            }
-            alt={description.name}
-          />
-        </Modal.Footer> */}{' '}
-        */}
+          <br />
+          <br />
+          <h1 align="center">
+            <img
+              src={
+                description.signature
+                  ? description.signature.url
+                  : loading
+              }
+              alt={description.name}
+              style={{ height: '20%', width: '20%', alignContent: 'center' }}
+            />
+          </h1>
+        </Modal.Body>
       </Modal>
+
+      {/* modal filter problems*/}
+      <Modal show={showfilter} onHide={handleClosefilter} centered>
+        <Modal.Header closeButton>
+          <strong>Encomendas com problemas</strong>
+        </Modal.Header>
+        {problems.map(filter => (
+          <Modal.Body>
+            <p>{filter.delivery.product} - {filter.description}</p>
+          </Modal.Body>
+        ))}
+      </Modal>
+
     </Container>
   );
 }

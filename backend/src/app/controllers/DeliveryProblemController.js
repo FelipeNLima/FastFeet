@@ -61,8 +61,8 @@ class DeliveryProblemController {
           ],
         },
       ],
-      limit: 20,
-      offset: (page - 1) * 20,
+      limit: 5,
+      offset: (page - 1) * 5,
     });
 
     return res.json(problems);

@@ -19,10 +19,10 @@ export default function Add() {
   const schema = Yup.object().shape({
     product: Yup.string().required('O produto é obrigatório'),
     recipient_id: Yup.string().required('O destinatário é obrigatório'),
-		deliveryman_id: Yup.string().required('O entregador é obrigatório'),
+    deliveryman_id: Yup.string().required('O entregador é obrigatório'),
   });
 
-  async function handleSubmit({recipient_id, deliveryman_id, product}) {
+  async function handleSubmit({ recipient_id, deliveryman_id, product }) {
     const data = {
       recipient_id,
       deliveryman_id,

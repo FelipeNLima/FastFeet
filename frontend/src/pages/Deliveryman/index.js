@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { Container } from './styles';
 
 import Menu from '~/components/Menu';
+import Pagination from '~/components/Pagination';
 import Header from '~/components/Header';
 
 import { showDeliverymanRequest } from '~/store/modules/deliveryman/actions';
@@ -23,7 +24,6 @@ export default function Deliveryman() {
 
 
   async function loadDeliveryman() {
-    setPage(1);
     const response = await api.get('/deliveryman', {
       params: {
         q: name,
@@ -31,6 +31,7 @@ export default function Deliveryman() {
       },
     });
     setDeliveryman(response.data);
+    setPage(response.data.length);
   }
 
   useEffect(() => {
@@ -149,6 +150,7 @@ export default function Deliveryman() {
           ))}
         </tbody>
       </table>
+      <Pagination loadItems={loadDeliveryman} itemsLenght={page} />
     </Container>
   );
 }
