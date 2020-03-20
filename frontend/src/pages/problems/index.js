@@ -24,20 +24,20 @@ export default function Problems() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  async function loadproblems() {
+  async function loadproblems(page) {
     const response = await api.get('/problems', {
       params: {
         q: name,
         page,
       },
     });
-    setproblems(response.data);
     setPage(response.data.length);
+    setproblems(response.data);
   }
 
   useEffect(() => {
     loadproblems();
-  }, [page, name]);
+  }, []);
 
   async function handleShowProblem(id) {
     const response = await api.get(`/problems/${id}`);

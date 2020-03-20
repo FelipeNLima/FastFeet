@@ -23,7 +23,7 @@ export default function Deliveryman() {
   const dispatch = useDispatch();
 
 
-  async function loadDeliveryman() {
+  async function loadDeliveryman(page) {
     const response = await api.get('/deliveryman', {
       params: {
         q: name,

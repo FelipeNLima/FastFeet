@@ -22,7 +22,7 @@ export default function Recipients() {
   const [recipients, setRecipients] = useState([]);
   const dispatch = useDispatch();
 
-  async function loadRecipients() {
+  async function loadRecipients(page) {
     const response = await api.get('/recipients', {
       params: {
         q: name,
@@ -31,7 +31,10 @@ export default function Recipients() {
     });
     setRecipients(response.data);
     setPage(response.data.length);
+    console.log(page);
   }
+
+  console.log(page);
 
   useEffect(() => {
     loadRecipients()

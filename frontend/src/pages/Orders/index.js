@@ -44,7 +44,7 @@ export default function Orders() {
 
   const dispatch = useDispatch();
 
-  async function loadOrders() {
+  async function loadOrders(page) {
     const response = await api.get('/orders', {
       params: {
         q: name,
