@@ -1,9 +1,14 @@
-import { useSelector } from 'react-redux';
+import React from 'react';
 
-import createRoutes from './route';
+import { createStackNavigator } from '@react-navigation/stack';
 
-export default function App() {
-  const signed = useSelector(state => state.auth.signed);
+import SignIn from '~/pages/SignIn';
 
-  return createRoutes(signed);
+export default function createRouter(isSigned = false) {
+  const { Stack } = createStackNavigator();
+
+  <Stack.Navigator headerMode="none">
+    <Stack.Screen name="SignIn" component={SignIn} />
+  </Stack.Navigator>
+
 }

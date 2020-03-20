@@ -12,7 +12,7 @@ export function* singIn({ payload }) {
   try {
     const { id } = payload;
 
-    const response = yield call(api.get, `/deliverymen/${id}`);
+    const response = yield call(api.get, `/deliveryman/${id}`);
 
     const data = {
       ...response.data,
