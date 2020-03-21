@@ -8,9 +8,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import './config/reactotronConfig';
 
-import { store, persistor } from './store';
-
 import App from './App';
+import { store, persistor } from './store';
 
 export default function Index() {
   return (
