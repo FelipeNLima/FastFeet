@@ -137,7 +137,7 @@ P.S.: Tested on Android system only.
 $ cd FastFeet/mobile
 
 # Install dependencies
-$ yarn
+$ yarn install
 
 # Run the Mobile
 $ react-native start
