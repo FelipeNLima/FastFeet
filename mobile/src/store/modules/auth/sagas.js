@@ -1,12 +1,12 @@
-import { all, takeLatest, call, put } from 'redux-saga/effects';
+import { Alert } from 'react-native';
 
-import { format, parseISO } from 'date-fns';
+import { parseISO, format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-
-import Snackbar from 'react-native-snackbar';
+import { takeLatest, call, put, all } from 'redux-saga/effects';
 
 import api from '~/services/api';
-import { singInSuccess, singFailure } from './actions';
+
+import { signInSuccess, signFailure } from './actions';
 
 export function* singIn({ payload }) {
   try {
@@ -21,15 +21,14 @@ export function* singIn({ payload }) {
       }),
     };
 
-    yield put(singInSuccess(data.id, data));
-  } catch ({ response }) {
-    yield put(singFailure());
-    Snackbar.show({
-      text: response.data.error,
-      duration: Snackbar.LENGTH_SHORT,
-      backgroundColor: '#E74040',
-    });
+    yield put(signInSuccess(data.id, data));
+  } catch (err) {
+    Alert.alert(
+      'Falha na autenticação',
+      'Houve um erro no login, verifique seus dados'
+    );
+    yield put(signFailure());
   }
 }
 
-export default all([takeLatest('@auth/SING_IN_REQUEST', singIn)]);
+export default all([takeLatest('@auth/SIGN_IN_REQUEST', singIn)]);

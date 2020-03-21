@@ -1,25 +1,25 @@
-export function singInRequest(id) {
+export function signInRequest(id) {
   return {
-    type: '@auth/SING_IN_REQUEST',
+    type: '@auth/SIGN_IN_REQUEST',
     payload: { id },
   };
 }
 
-export function singInSuccess(id, profile) {
+export function signInSuccess(id, user) {
   return {
-    type: '@auth/SING_IN_SUCCESS',
-    payload: { id, profile },
+    type: '@auth/SIGN_IN_SUCCESS',
+    payload: { id, user },
   };
 }
 
-export function singFailure() {
+export function signFailure() {
   return {
-    type: '@auth/SING_FAILURE',
+    type: '@auth/SIGN_IN_FAILURE',
   };
 }
 
-export function singOut() {
+export function signOut() {
   return {
-    type: '@auth/SING_OUT',
+    type: '@auth/SIGN_OUT',
   };
 }

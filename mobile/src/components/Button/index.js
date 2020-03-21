@@ -11,8 +11,8 @@ export default function Button({ children, loading, style, ...rest }) {
       {loading ? (
         <ActivityIndicator size={24} color="#fff" />
       ) : (
-        <Text>{children}</Text>
-      )}
+          <Text>{children}</Text>
+        )}
     </Container>
   );
 }

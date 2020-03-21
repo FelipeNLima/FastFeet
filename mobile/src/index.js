@@ -1,15 +1,17 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, YellowBox } from 'react-native';
 import { Provider } from 'react-redux';
+import '~/config/ReactotronConfig';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import './config/reactotronConfig';
+import { store, persistor } from '~/store';
 
 import App from './App';
-import { store, persistor } from './store';
+
+YellowBox.ignoreWarnings(['componentWillReceiveProps', 'Failed prop type']);
 
 export default function Index() {
   return (

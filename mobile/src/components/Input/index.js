@@ -1,11 +1,11 @@
 import React, { useRef, useEffect } from 'react';
-
 import { useField } from '@unform/core';
+
 import PropTypes from 'prop-types';
 
-import { Container, Input } from './styles';
+import { Container, TextInput } from './styles';
 
-export default function InputSingIn({ name, ...rest }) {
+export default function Input({ name, ...rest }) {
   const inputRef = useRef(null);
   const { fieldName, registerField, defaultValue = '' } = useField(name);
 
@@ -19,10 +19,13 @@ export default function InputSingIn({ name, ...rest }) {
 
   return (
     <Container>
-      <Input
+      <TextInput
         ref={inputRef}
         defaultValue={defaultValue}
-        placeholder="Digite seu ID de cadastro"
+        placeholder="Informe seu ID de cadastro"
+        autoCorrect={false}
+        returnKeyType="send"
+        autoCapitalize="none"
         {...rest}
       />
     </Container>

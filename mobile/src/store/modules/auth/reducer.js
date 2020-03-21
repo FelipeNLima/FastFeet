@@ -1,4 +1,4 @@
-import { produce } from 'immer';
+import produce from 'immer';
 
 const INITIAL_STATE = {
   id: null,
@@ -9,21 +9,21 @@ const INITIAL_STATE = {
 export default function auth(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
-      case '@auth/SING_IN_REQUEST': {
+      case '@auth/SIGN_IN_REQUEST': {
         draft.loading = true;
         break;
       }
-      case '@auth/SING_IN_SUCCESS': {
+      case '@auth/SIGN_IN_SUCCESS': {
         draft.signed = true;
         draft.id = action.payload.id;
         draft.loading = false;
         break;
       }
-      case '@auth/SING_FAILURE': {
+      case '@auth/SIGN_IN_FAILURE': {
         draft.loading = false;
         break;
       }
-      case '@auth/SING_OUT': {
+      case '@auth/SIGN_OUT': {
         draft.signed = false;
         draft.id = null;
         break;
