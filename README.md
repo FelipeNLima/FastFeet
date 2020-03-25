@@ -92,7 +92,7 @@ P.S.: After running seeds, by default the password for to login is: 123456
 $ cd FastFeet/backend
 
 # Install dependencies
-$ yarn
+$ yarn install
 
 # Created docker container postgree
 $ docker run --name database -e POSTGRES_PASSWORD=docker -e POSTGRES_DB=meetapp -p 5432:5432 -d postgres
@@ -121,7 +121,7 @@ $ yarn queue
 $ cd FastFeet/frontend
 
 # Install dependencies
-$ yarn
+$ yarn install
 
 # Run the Frontend
 $ yarn start
@@ -137,7 +137,7 @@ P.S.: Tested on Android system only.
 $ cd FastFeet/mobile
 
 # Install dependencies
-$ yarn
+$ yarn install
 
 # Run the Mobile
 $ react-native start
