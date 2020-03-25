@@ -1,12 +1,33 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { Container } from './styles';
+import { Container, Avatar, Title, TextName, LogoutButton } from './styles';
 
-export default function profile() {
+import { signOut } from '~/store/modules/auth/actions';
+
+export default function Profile() {
+  const profile = useSelector(state => state.user.profile);
+  console.log(profile.avatar.url);
+  const dispatch = useDispatch();
   return (
     <Container>
-      <Text>Profile</Text>
+      <Avatar
+        source={{
+          uri: profile.avatar
+            ? profile.avatar.url
+            : `https://api.adorable.io/avatars/50/${profile.name}.png`
+        }}
+      />
+      <Title>Nome completo</Title>
+      <TextName>{profile.name}</TextName>
+
+      <Title>Email</Title>
+      <TextName>{profile.email}</TextName>
+
+      <Title>Data de cadastro</Title>
+      <TextName>{profile.registeredDate}</TextName>
+
+      <LogoutButton onPress={() => dispatch(signOut())}>Logout</LogoutButton>
     </Container>
   );
 }

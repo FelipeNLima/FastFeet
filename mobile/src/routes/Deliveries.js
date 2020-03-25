@@ -1,15 +1,13 @@
 import React from 'react';
-
 import { createStackNavigator } from '@react-navigation/stack';
 
-import deliveries from '~/screen/deliveries';
-// import DeliveryDetails from '~/pages/DeliveryDetails';
+import Details from '~/screen/DeliveryDetails';
+import Delivery from '~/screen/deliveries';
 
 const Stack = createStackNavigator();
 
 export default function Deliveries() {
   return (
-
     <Stack.Navigator
       screenOptions={{
         headerBackTitleVisible: false,
@@ -25,22 +23,15 @@ export default function Deliveries() {
       <Stack.Screen
         options={{ headerShown: false }}
         name="Entregas"
-        component={deliveries}
+        component={Delivery}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="Detalhes"
         options={{
           title: 'Detalhes da encomenda',
         }}
-        component={DeliveryDetails}
-      /> */}
-      {/* <Stack.Screen
-        name="ConfirmPhoto"
-        options={{
-          title: 'Confirmar entrega',
-        }}
-        component={DeliveryConfirmPhoto}
-      /> */}
+        component={Details}
+      />
     </Stack.Navigator>
   );
 }

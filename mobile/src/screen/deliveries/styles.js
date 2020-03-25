@@ -30,8 +30,18 @@ export const WelcomeText = styled.Text`
 `;
 
 export const TextName = styled.Text`
-font-size: 22px;
+  font-size: 22px;
   font-weight: bold;
   color: #444;
 `;
 
+export const CardContainer = styled.View`
+  flex: 1;
+  background: #fff;
+`;
+
+export const Title = styled.Text`
+  font-size: 24px;
+  font-weight: bold;
+  color: #444;
+`;

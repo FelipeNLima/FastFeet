@@ -1,10 +1,41 @@
 import * as Yup from 'yup';
+import { Op } from 'sequelize';
 
 import File from '../models/File';
 import Orders from '../models/Orders';
 import Deliveryman from '../models/Deliveryman';
+import Recipient from '../models/Recipient';
 
 class CompletedDeliveries {
+  async index(req, res) {
+    const { deliveryman_id } = req.params;
+    const deliveryman = await Deliveryman.findByPk(deliveryman_id);
+
+    if (!deliveryman) {
+      return res.status(400).json({ error: 'Deliveryman not found.' });
+    }
+
+    const deliveries = await Orders.findAll({
+      where: {
+        deliveryman_id,
+        canceled_at: null,
+        end_date: {
+          [Op.ne]: null,
+        },
+      },
+      attributes: ['id', 'product', 'start_date', 'end_date'],
+      include: [
+        {
+          model: Recipient,
+          as: 'recipient',
+          attributes: ['name', 'city'],
+        },
+      ],
+    });
+
+    return res.json(deliveries);
+  }
+
   async update(req, res) {
     const schema = Yup.object().shape({
       end_date: Yup.string().required(),

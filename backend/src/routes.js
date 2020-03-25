@@ -21,6 +21,15 @@ routes.post('/sessions', SessionController.store);
 
 routes.get('/deliveryman/:id', DeliveryManController.show);
 
+// Encomenda Pendente
+routes.get('/deliveryman/:deliveryman_id/withdraw', WithdrawController.index);
+
+// Detalhes da encomenda
+routes.get(
+  '/deliveryman/:deliveryman_id/withdraw/:order_id',
+  WithdrawController.show
+);
+
 // Entrada na Encomenda
 routes.put(
   '/deliveryman/:deliveryman_id/withdraw/:delivery_id',
@@ -28,6 +37,10 @@ routes.put(
 );
 
 // Entregou a Encomenda
+routes.get(
+  '/deliveryman/:deliveryman_id/deliveries',
+  CompletedDeliveries.index
+);
 routes.put(
   '/deliveryman/:deliveryman_id/deliveries/:delivery_id',
   upload.single('file'),
@@ -62,6 +75,7 @@ routes.post('/orders', OrdersController.store);
 routes.put('/orders/:id', OrdersController.update);
 routes.delete('/orders/:id', OrdersController.delete);
 routes.get('/orders/:id', OrdersController.show);
+
 // Gestão de Problemas com a Encomenda
 routes.get('/problems', DeliveryProblemController.index);
 routes.get('/problems/:id', DeliveryProblemController.show);

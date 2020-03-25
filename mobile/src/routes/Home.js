@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import Profile from '~/screen/profile';
+import Profile from '~/screen/Profile';
 import Deliveries from '~/routes/Deliveries';
 
 const Tab = createBottomTabNavigator();
