@@ -6,7 +6,7 @@ import { Container, Avatar, Title, TextName, LogoutButton } from './styles';
 import { signOut } from '~/store/modules/auth/actions';
 
 export default function Profile() {
-  const profile = useSelector(state => state.user.profile);
+  const profile = useSelector((state) => state.user.profile);
   console.log(profile.avatar.url);
   const dispatch = useDispatch();
   return (
@@ -15,7 +15,7 @@ export default function Profile() {
         source={{
           uri: profile.avatar
             ? profile.avatar.url
-            : `https://api.adorable.io/avatars/50/${profile.name}.png`
+            : `https://api.adorable.io/avatars/50/${profile.name}.png`,
         }}
       />
       <Title>Nome completo</Title>

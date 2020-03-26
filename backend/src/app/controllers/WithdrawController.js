@@ -10,6 +10,8 @@ import File from '../models/File';
 class WithdrawController {
   async index(req, res) {
     const { deliveryman_id } = req.params;
+    const { page = 1 } = req.query;
+
     const deliveryman = await Deliveryman.findByPk(deliveryman_id);
 
     if (!deliveryman) {
@@ -47,6 +49,8 @@ class WithdrawController {
         'start_date',
         'end_date',
       ],
+      limit: 5,
+      offset: (page - 1) * 5,
     });
 
     return res.json(order);

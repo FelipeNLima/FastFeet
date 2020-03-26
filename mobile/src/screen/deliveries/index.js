@@ -4,20 +4,29 @@ import { TouchableOpacity, Dimensions } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import TabPending from '~/screen/deliveries/TabPending';
 import TabHandeOut from '~/screen/deliveries/TabHandeOut';
 
-import { Container, Avatar, WelcomeText, TextName, Viewheader, Header, CardContainer, Title } from './styles';
-
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {
+  Container,
+  Avatar,
+  WelcomeText,
+  TextName,
+  Viewheader,
+  Header,
+  CardContainer,
+  Title,
+} from './styles';
 
 import { signOut } from '~/store/modules/auth/actions';
+
 const initialLayout = { width: Dimensions.get('window').width };
 
 export default function deliveries() {
   const dispatch = useDispatch();
 
-  const deliveryman = useSelector(state => state.user.profile);
+  const deliveryman = useSelector((state) => state.user.profile);
   // const id = useSelector(state => state.auth.id);
   const [index, setIndex] = useState(0);
 
@@ -54,7 +63,7 @@ export default function deliveries() {
           source={{
             uri: deliveryman.avatar
               ? deliveryman.avatar.url
-              : `https://api.adorable.io/avatars/50/${deliveryman.name}.png`
+              : `https://api.adorable.io/avatars/50/${deliveryman.name}.png`,
           }}
         />
         <Viewheader>

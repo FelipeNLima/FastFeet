@@ -30,27 +30,29 @@ import {
 
 export default function DeliveryDetails({ route }) {
   const navigation = useNavigation();
-  const { order_id: IdOrder } = route.params;
   const id = useSelector((state) => state.auth.id);
   const isFocused = useIsFocused();
+  const { delivery } = route.params;
   const [order, setOrder] = useState({});
 
   useEffect(() => {
     async function showOrder() {
-      const response = await api.get(`/deliveryman/${id}/withdraw/${IdOrder}`);
+      const response = await api.get(
+        `/deliveryman/${id}/withdraw/${delivery.id}`
+      );
 
       const data = {
         ...response.data,
         delivered: !!response.data.end_date,
         startDate: response.data.start_date
           ? format(parseISO(response.data.start_date), 'dd/MM/yyyy', {
-            locale: ptBR,
-          })
+              locale: ptBR,
+            })
           : '--/--/----',
         endDate: response.data.end_date
           ? format(parseISO(response.data.end_date), 'dd/MM/yyyy', {
-            locale: ptBR,
-          })
+              locale: ptBR,
+            })
           : '--/--/----',
       };
       setOrder(data);
@@ -61,9 +63,9 @@ export default function DeliveryDetails({ route }) {
   }, []);
 
   async function handleDeliveryWithdraw() {
-    async function delievryWithdraw() {
+    async function deliveryWithdraw() {
       try {
-        await api.put(`/deliveryman/${id}/withdraw/${IdOrder}`, {
+        await api.put(`/deliveryman/${id}/withdraw/${delivery.id}`, {
           start_date: new Date(),
         });
 
@@ -83,7 +85,7 @@ export default function DeliveryDetails({ route }) {
         },
         {
           text: 'Confirmar',
-          onPress: delievryWithdraw,
+          onPress: deliveryWithdraw,
         },
       ],
       {
@@ -91,7 +93,7 @@ export default function DeliveryDetails({ route }) {
       }
     );
   }
-  console.log(order);
+
   return (
     <Container>
       <StatusBar backgroundColor="#7d40e7" barStyle="light-content" />
@@ -104,17 +106,17 @@ export default function DeliveryDetails({ route }) {
           </Header>
           <InfoView>
             <Titleheader>DESTINATÁRIO</Titleheader>
-            <Text>{order.recipient.name}</Text>
+            <Text>{delivery.recipient.name}</Text>
           </InfoView>
           <InfoView>
             <Titleheader>ENDEREÇO DE ENTREGA</Titleheader>
             <Text>
-              {order.recipient.street}, {order.recipient.number}
+              {delivery.recipient.street}, {delivery.recipient.number}
             </Text>
           </InfoView>
           <InfoView>
             <Titleheader>PRODUTO</Titleheader>
-            <Text>{order.product}</Text>
+            <Text>{delivery.product}</Text>
           </InfoView>
         </Card>
 
@@ -133,7 +135,7 @@ export default function DeliveryDetails({ route }) {
             </Header>
             <InfoView>
               <Titleheader>STATUS</Titleheader>
-              <Text>{order.status}</Text>
+              <Text>{delivery.status}</Text>
             </InfoView>
             <InfoViewData>
               <InfoData>
