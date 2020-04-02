@@ -3,6 +3,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Details from '~/screen/DeliveryDetails';
 import Delivery from '~/screen/deliveries';
+import ConfirmDelivery from '~/screen/DeliveryDetails/ConfirmDelivery';
+import ReportProblem from '~/screen/DeliveryDetails/ReportProblem';
+import ViewProblem from '~/screen/DeliveryDetails/ViewProblem';
 
 const Stack = createStackNavigator();
 
@@ -31,6 +34,27 @@ export default function Deliveries() {
           title: 'Detalhes da encomenda',
         }}
         component={Details}
+      />
+      <Stack.Screen
+        name="Confirmação"
+        options={{
+          title: 'Confirmar Entrega',
+        }}
+        component={ConfirmDelivery}
+      />
+      <Stack.Screen
+        name="Informar"
+        options={{
+          title: 'Informar Problema',
+        }}
+        component={ReportProblem}
+      />
+      <Stack.Screen
+        name="Visualizar"
+        options={{
+          title: 'Visualizar Problema',
+        }}
+        component={ViewProblem}
       />
     </Stack.Navigator>
   );

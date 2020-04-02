@@ -17,12 +17,12 @@ export default function createRouter(isSigned = false) {
       />
     </Stack.Navigator>
   ) : (
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          options={{ headerShown: false }}
-          component={Home}
-        />
-      </Stack.Navigator>
-    );
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        options={{ headerShown: false }}
+        component={Home}
+      />
+    </Stack.Navigator>
+  );
 }

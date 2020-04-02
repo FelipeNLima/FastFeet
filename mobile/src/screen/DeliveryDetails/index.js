@@ -68,7 +68,6 @@ export default function DeliveryDetails({ route }) {
         await api.put(`/deliveryman/${id}/withdraw/${delivery.id}`, {
           start_date: new Date(),
         });
-
         navigation.navigate('Entregas');
       } catch (err) {
         Alert.alert('Horário de retirda inválida.');
@@ -92,6 +91,23 @@ export default function DeliveryDetails({ route }) {
         canceled_at: false,
       }
     );
+  }
+
+  function handleConfirmDelivery() {
+    navigation.navigate('Confirmação', { deliveryman_id: id });
+  }
+
+  function handleReportProblem() {
+    navigation.navigate('Informar', {
+      delivery_id: delivery.id,
+    });
+  }
+
+  function handleViewProblem() {
+    navigation.navigate('Visualizar', {
+      delivery_id: delivery.id,
+      product: delivery.product,
+    });
   }
 
   return (
@@ -160,25 +176,46 @@ export default function DeliveryDetails({ route }) {
           }}
         >
           <Footer>
-            <TouchableOpacity style={{ alignItems: 'center', flex: 1 }}>
+            {/* Botão Problema */}
+            <TouchableOpacity
+              style={{ alignItems: 'center', flex: 1 }}
+              onPress={handleReportProblem}
+              disabled={order.delivered}
+            >
               <Icon name="close-circle-outline" color="#E74040" size={28} />
               <TextButton>Informar problema</TextButton>
             </TouchableOpacity>
-            <TouchableOpacity style={{ alignItems: 'center', flex: 1 }}>
+
+            {/* Botão Visualizar Problema */}
+            <TouchableOpacity
+              style={{ alignItems: 'center', flex: 1 }}
+              onPress={handleViewProblem}
+              disabled={order.delivered}
+            >
               <Icon name="alert-circle-outline" color="#E7BA40" size={28} />
               <TextButton>Visualizar problemas</TextButton>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={handleDeliveryWithdraw}
-              style={{ alignItems: 'center', flex: 1 }}
-            >
-              <Icon name="update" color="#32CD32" size={28} />
-              <TextButton>Realizar Retirada</TextButton>
-            </TouchableOpacity>
-            <TouchableOpacity style={{ alignItems: 'center', flex: 1 }}>
-              <Icon name="check-circle-outline" color="#7D40E7" size={28} />
-              <TextButton>Confirmar entrega</TextButton>
-            </TouchableOpacity>
+
+            {delivery.status === 'PENDENTE' ? (
+              // Botão de Realizar Retirada
+              <TouchableOpacity
+                onPress={handleDeliveryWithdraw}
+                style={{ alignItems: 'center', flex: 1 }}
+                disabled={order.delivered}
+              >
+                <Icon name="update" color="#32CD32" size={28} />
+                <TextButton>Realizar Retirada</TextButton>
+              </TouchableOpacity>
+            ) : (
+              // Botão de Confirmar Entrega
+              <TouchableOpacity
+                style={{ alignItems: 'center', flex: 1 }}
+                onPress={handleConfirmDelivery}
+              >
+                <Icon name="check-circle-outline" color="#7D40E7" size={28} />
+                <TextButton>Confirmar entrega</TextButton>
+              </TouchableOpacity>
+            )}
           </Footer>
         </Card>
       </Content>

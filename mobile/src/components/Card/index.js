@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { FlatList, ActivityIndicator } from 'react-native';
+import React from 'react';
+
 import { useNavigation } from '@react-navigation/native';
-import { format, parseISO } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+
 import PropTypes from 'prop-types';
 import { Card } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import StepIndicator from 'react-native-step-indicator';
-import api from '~/services/api';
 
 import {
   Header,

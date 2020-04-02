@@ -71,11 +71,18 @@ class DeliveryProblemController {
   async show(req, res) {
     const { id } = req.params;
 
-    const problems = await DeliveryProblem.findByPk(id, {
-      attributes: ['id', 'delivery_id', 'description'],
-    });
+    try {
+      const problems = await DeliveryProblem.findAll({
+        where: {
+          delivery_id: id,
+        },
+        attributes: ['id', 'delivery_id', 'description', 'created_at'],
+      });
 
-    return res.json(problems);
+      return res.json(problems);
+    } catch (err) {
+      return res.status(400).json({ error: 'erro' });
+    }
   }
 
   async store(req, res) {
