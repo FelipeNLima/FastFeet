@@ -13,9 +13,9 @@ export default function Profile() {
     <Container>
       <Avatar
         source={{
-          uri: profile.avatar
-            ? profile.avatar.url
-            : `https://api.adorable.io/avatars/50/${profile.name}.png`,
+          uri:
+            `http://192.168.0.110:3333/files/${profile.avatar.path}` ||
+            `https://api.adorable.io/avatars/50/${profile.name}.png`,
         }}
       />
       <Title>Nome completo</Title>

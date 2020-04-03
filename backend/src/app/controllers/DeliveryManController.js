@@ -52,6 +52,8 @@ class DeliveryManController {
   }
 
   // async show(req, res) {
+  //   const { id } = req.params;
+  //   const { delivered = 'true', page = 1 } = req.query;
   //   const schema = await Yup.object().shape({
   //     id: Yup.number().required(),
   //   });
@@ -59,8 +61,6 @@ class DeliveryManController {
   //   if (!(await schema.isValid(req.params)))
   //     return res.status(400).json({ error: 'Validation fails' });
 
-  //   const { id } = req.params;
-  //   const { delivered = 'true', page = 1 } = req.query;
 
   //   const deliveryman = await Deliveryman.findByPk(id);
 

@@ -43,7 +43,7 @@ export default function DeliveryDetails({ route }) {
 
       const data = {
         ...response.data,
-        delivered: !!response.data.end_date,
+        delivered: response.data.end_date,
         startDate: response.data.start_date
           ? format(parseISO(response.data.start_date), 'dd/MM/yyyy', {
               locale: ptBR,
@@ -175,6 +175,7 @@ export default function DeliveryDetails({ route }) {
             elevation: 1,
           }}
         >
+          {}
           <Footer>
             {/* Botão Problema */}
             <TouchableOpacity
@@ -211,6 +212,7 @@ export default function DeliveryDetails({ route }) {
               <TouchableOpacity
                 style={{ alignItems: 'center', flex: 1 }}
                 onPress={handleConfirmDelivery}
+                disabled={order.delivered}
               >
                 <Icon name="check-circle-outline" color="#7D40E7" size={28} />
                 <TextButton>Confirmar entrega</TextButton>

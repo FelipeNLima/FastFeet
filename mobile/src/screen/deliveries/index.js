@@ -59,13 +59,13 @@ export default function deliveries() {
   return (
     <Container>
       <Header>
-        <Avatar
-          source={{
-            uri: deliveryman.avatar
-              ? deliveryman.avatar.url
-              : `https://api.adorable.io/avatars/50/${deliveryman.name}.png`,
-          }}
-        />
+      <Avatar
+        source={{
+          uri:
+            `http://192.168.0.110:3333/files/${deliveryman.avatar.path}` ||
+            `https://api.adorable.io/avatars/50/${deliveryman.name}.png`,
+        }}
+      />
         <Viewheader>
           <WelcomeText>Bem vindo de volta,</WelcomeText>
           <TextName>{deliveryman.name}</TextName>

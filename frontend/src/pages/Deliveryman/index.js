@@ -108,7 +108,7 @@ export default function Deliveryman() {
                   src={
                     deliveryman.avatar
                       ? deliveryman.avatar.url
-                      : 'https://api.adorable.io/avatars/50/abott@adorable.png'
+                      : `https://api.adorable.io/avatars/50/${deliveryman.name}@adorable.png`
                   }
                   alt={deliveryman.name}
                 />

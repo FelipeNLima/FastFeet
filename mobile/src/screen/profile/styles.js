@@ -12,7 +12,7 @@ export const Avatar = styled.Image`
   height: 135px;
   width: 135px;
   border-radius: 68px;
-  background: #666;
+  background: #eee;
   align-self: center;
   margin-bottom: 40px;
   border: 2px solid #eee;

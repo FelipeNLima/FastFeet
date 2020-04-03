@@ -31,10 +31,7 @@ export default function Recipients() {
     });
     setRecipients(response.data);
     setPage(response.data.length);
-    console.log(page);
   }
-
-  console.log(page);
 
   useEffect(() => {
     loadRecipients()
@@ -46,7 +43,6 @@ export default function Recipients() {
       if (confirm) {
         await api.delete(`/recipients/${id}`);
         toast.success('Destinatário excluído com sucesso!');
-        loadRecipients();
       }
       loadRecipients();
     } catch (err) {
