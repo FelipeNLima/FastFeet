@@ -36,7 +36,7 @@ export default function Deliveries() {
         component={Details}
       />
       <Stack.Screen
-        name="Confirmação"
+        name="Confirmacao"
         options={{
           title: 'Confirmar Entrega',
         }}

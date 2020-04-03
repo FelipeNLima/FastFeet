@@ -9,8 +9,9 @@ import Recipient from '../models/Recipient';
 class CompletedDeliveries {
   async index(req, res) {
     const { deliveryman_id } = req.params;
-    const deliveryman = await Deliveryman.findByPk(deliveryman_id);
+    const { page = 1 } = req.query;
 
+    const deliveryman = await Deliveryman.findByPk(deliveryman_id);
     if (!deliveryman) {
       return res.status(400).json({ error: 'Deliveryman not found.' });
     }
@@ -23,22 +24,43 @@ class CompletedDeliveries {
           [Op.ne]: null,
         },
       },
-      attributes: ['id', 'product', 'start_date', 'end_date'],
+      attributes: [
+        'id',
+        'product',
+        'status',
+        'created_at',
+        'canceled_at',
+        'start_date',
+        'end_date',
+      ],
       include: [
         {
           model: Recipient,
           as: 'recipient',
-          attributes: ['name', 'city'],
+          attributes: [
+            'id',
+            'name',
+            'street',
+            'number',
+            'complement',
+            'state',
+            'city',
+            'postalcode',
+          ],
         },
       ],
+      limit: 5,
+      offset: (page - 1) * 5,
     });
 
     return res.json(deliveries);
   }
 
   async update(req, res) {
+    const { signature_id } = req.body;
+
     const schema = Yup.object().shape({
-      end_date: Yup.string().required(),
+      signature_id: Yup.number().required(),
     });
 
     if (!(await schema.isValid(req.body)))
@@ -46,17 +68,15 @@ class CompletedDeliveries {
 
     const { deliveryman_id, delivery_id } = req.params;
 
-    const deliverymanExists = await Deliveryman.findByPk(deliveryman_id);
-
-    if (!deliverymanExists)
-      return res.status(400).json({ error: 'Deliveryman is not Exists' });
-
-    const delivery = await Orders.findByPk(delivery_id);
+    const delivery = await Orders.findOne({
+      where: {
+        id: delivery_id,
+        deliveryman_id,
+        canceled_at: null,
+      },
+    });
 
     if (!delivery) return res.status(400).json({ error: 'Delivery not found' });
-
-    if (!req.file)
-      return res.status(400).json({ error: 'The signature needs to be sent' });
 
     if (Number(deliveryman_id) !== delivery.deliveryman_id)
       return res.status(401).json({ error: "You don't have permission." });
@@ -70,18 +90,9 @@ class CompletedDeliveries {
       return res.status(400).json({ error: 'Completed order' });
     }
 
-    const { end_date } = req.body;
-
-    const { originalname: name, filename: path } = req.file;
-
-    const file = await File.create({
-      name,
-      path,
-    });
-
     await delivery.update({
-      end_date,
-      signature_id: file.id,
+      signature_id,
+      end_date: new Date(),
     });
 
     await delivery.reload({

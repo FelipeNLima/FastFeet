@@ -93,10 +93,6 @@ export default function DeliveryDetails({ route }) {
     );
   }
 
-  function handleConfirmDelivery() {
-    navigation.navigate('Confirmação', { deliveryman_id: id });
-  }
-
   function handleReportProblem() {
     navigation.navigate('Informar', {
       delivery_id: delivery.id,
@@ -108,6 +104,10 @@ export default function DeliveryDetails({ route }) {
       delivery_id: delivery.id,
       product: delivery.product,
     });
+  }
+
+  function handleConfirmDelivery() {
+    navigation.navigate('Confirmacao', { delivery_id: delivery.id });
   }
 
   return (

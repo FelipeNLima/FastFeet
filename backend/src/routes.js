@@ -21,6 +21,9 @@ routes.post('/sessions', SessionController.store);
 
 routes.get('/deliveryman/:id', DeliveryManController.show);
 
+// Imagem de Avatar Entregadores
+routes.post('/files', upload.single('file'), FileController.store);
+
 // Encomenda Pendente
 routes.get('/deliveryman/:deliveryman_id/withdraw', WithdrawController.index);
 
@@ -41,17 +44,19 @@ routes.get(
   '/deliveryman/:deliveryman_id/deliveries',
   CompletedDeliveries.index
 );
+
 routes.put(
   '/deliveryman/:deliveryman_id/deliveries/:delivery_id',
   upload.single('file'),
   CompletedDeliveries.update
 );
 
-// Problema na Encomenda
+// Informar Problema na Encomenda
 routes.post(
   '/deliveries/:delivery_id/problems',
   DeliveryProblemController.store
 );
+routes.get('/problems/:id', DeliveryProblemController.show);
 
 // Verificar a autenticação do admin
 routes.use(authMiddleware);
@@ -78,13 +83,9 @@ routes.get('/orders/:id', OrdersController.show);
 
 // Gestão de Problemas com a Encomenda
 routes.get('/problems', DeliveryProblemController.index);
-routes.get('/problems/:id', DeliveryProblemController.show);
 routes.delete(
   '/problems/:id/cancel-delivery',
   DeliveryProblemController.delete
 );
-
-// Imagem de Avatar Entregadores
-routes.post('/files', upload.single('file'), FileController.store);
 
 export default routes;

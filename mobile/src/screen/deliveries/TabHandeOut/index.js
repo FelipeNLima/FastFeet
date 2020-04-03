@@ -36,7 +36,7 @@ const TabHandeOut = () => {
       date: format(parseISO(delivery.end_date), 'dd/MM/yyyy', {
         locale: ptBR,
       }),
-      currentPosition: delivery.status === 3,
+      currentPosition: delivery.status === 'ENTREGUE' ? 3 : 3,
     }));
 
     setDelivered([...delivered, ...data]);

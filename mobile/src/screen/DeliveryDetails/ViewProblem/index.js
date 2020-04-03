@@ -24,14 +24,12 @@ export default function ViewProblem({ route }) {
 
   const { delivery_id: id, product } = route.params;
 
-  console.log(id, product);
-
   async function loadingProblems() {
     const response = await api.get(`/problems/${id}`);
 
     const data = response.data.map((problem) => ({
       ...problem,
-      dateFormated: format(parseISO(problem.created_at), 'dd/MM/yyyy', {
+      date: format(parseISO(problem.created_at), 'dd/MM/yyyy', {
         locale: ptBR,
       }),
     }));
