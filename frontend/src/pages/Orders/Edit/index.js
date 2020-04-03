@@ -2,7 +2,7 @@ import React from 'react';
 
 import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
-import { Form, Input } from '@rocketseat/unform';
+import { Form } from '@unform/web';
 
 import history from '~/services/history';
 import RecipientInput from '~/pages/Orders/InputRecipient';
@@ -11,6 +11,7 @@ import { MdChevronLeft, MdCheck } from 'react-icons/md';
 
 import { Container, BackButton, Content, Button, View, ViewProdut } from './styles';
 import { updateOrderRequest } from '~/store/modules/order/actions';
+import Input from '~/components/Input';
 
 export default function Edit() {
   const dispatch = useDispatch();

@@ -9,13 +9,17 @@ class OrderDetailsMail {
 
   async handle({ data }) {
     const date = new Date();
-    const { orders } = data;
+    const { deliverymanExists, recipientExists, order } = data;
+
     Mail.sendMail({
-      to: `${orders.deliveries.name} <${orders.deliveries.email}>`,
+      to: `${deliverymanExists.name} <${deliverymanExists.email}>`,
       subject: 'Produto Cadastrado',
       template: 'orderdetails',
       context: {
-        user: orders.deliveries.name,
+        deliveryman: deliverymanExists.name,
+        recipient: recipientExists.name,
+        address: `${recipientExists.street}, N° ${recipientExists.number}, ${recipientExists.city} - ${recipientExists.state}`,
+        product: order.product,
         date: format(parseISO(date), "'dia' dd 'de' MMMM', às' H:mm'h'", {
           locale: pt,
         }),

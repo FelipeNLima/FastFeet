@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
-import { useField } from '@rocketseat/unform';
+import { useField } from '@unform/core';
 import AsyncSelect from 'react-select/async';
 
 import api from '~/services/api';
@@ -32,13 +32,14 @@ export default function RecipientInput({ name, ...rest }) {
       setRecipients(data);
     }
     loadData();
-  }, [page]);
+  }, []);
 
   const filterColors = inputValue => {
     return recipients.filter(i =>
       i.label.toLowerCase().includes(inputValue.toLowerCase())
     );
   };
+
   const promiseOptions = inputValue =>
     new Promise(resolve => {
       resolve(filterColors(inputValue));
@@ -74,7 +75,7 @@ export default function RecipientInput({ name, ...rest }) {
       placeholder="Destinatário exemplo "
       ref={recipientRef}
       classNamePrefix="react-select"
-      noOptionsMessage={() => 'Nenhum entregador encontrado'}
+      noOptionsMessage={() => 'Nenhum cliente encontrado'}
       {...rest}
     />
   );

@@ -107,6 +107,8 @@ class OrdersController {
   }
 
   async store(req, res) {
+    const { recipient_id, deliveryman_id, product } = req.body;
+
     const schema = Yup.object().shape({
       recipient_id: Yup.number().required(),
       deliveryman_id: Yup.number().required(),
@@ -119,9 +121,9 @@ class OrdersController {
       });
     }
 
-    const deliverymanExists = await Orders.findOne({
+    const deliverymanExists = await Deliveryman.findOne({
       where: {
-        id: req.body.deliveryman_id,
+        id: deliveryman_id,
       },
     });
 
@@ -133,7 +135,7 @@ class OrdersController {
 
     const recipientExists = await Recipients.findOne({
       where: {
-        id: req.body.recipient_id,
+        id: recipient_id,
       },
     });
 
@@ -143,12 +145,16 @@ class OrdersController {
       });
     }
 
-    const { id, recipient_id, deliveryman_id, product } = await Orders.create(
-      req.body
-    );
+    const order = await Orders.create({
+      deliveryman_id,
+      recipient_id,
+      product,
+    });
 
     await Queue.add(ordersdetailsmail.key, {
       deliverymanExists,
+      recipientExists,
+      order,
     });
 
     return res.json({

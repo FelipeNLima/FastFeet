@@ -2,17 +2,17 @@ import React, { useRef, useEffect, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
-import { useField } from '@rocketseat/unform';
+import { useField } from '@unform/core';
 import AsyncSelect from 'react-select/async';
 
 import api from '~/services/api';
 
-export default function DeliverymanInput({ ...rest }) {
-  const [recipients, setRecipients] = useState([]);
+export default function DeliverymanInput({ name, ...rest }) {
+  const [deliveryman, setDeliveryman] = useState([]);
   const [page, setPage] = useState(1);
 
-  const recipientRef = useRef(null);
-  const { fieldName, defaultValue, registerField } = useField('deliveryman');
+  const deliverymanRef = useRef(null);
+  const { fieldName, defaultValue, registerField } = useField(name);
 
   useEffect(() => {
     async function loadData() {
@@ -24,18 +24,18 @@ export default function DeliverymanInput({ ...rest }) {
         },
       });
 
-      const data = response.data.map(recipient => ({
-        value: recipient.id,
-        label: recipient.name,
+      const data = response.data.map(deliveryman => ({
+        value: deliveryman.id,
+        label: deliveryman.name,
       }));
 
-      setRecipients(data);
+      setDeliveryman(data);
     }
     loadData();
-  }, [page]);
+  }, []);
 
   const filterColors = inputValue => {
-    return recipients.filter(i =>
+    return deliveryman.filter(i =>
       i.label.toLowerCase().includes(inputValue.toLowerCase())
     );
   };
@@ -47,8 +47,8 @@ export default function DeliverymanInput({ ...rest }) {
 
   useEffect(() => {
     registerField({
-      name: 'deliveryman_id',
-      ref: recipientRef.current,
+      name: fieldName,
+      ref: deliverymanRef.current,
       path: 'select.state.value',
       getValue: ref => {
         if (rest.isMulti) {
@@ -60,7 +60,6 @@ export default function DeliverymanInput({ ...rest }) {
           if (!ref.select.state.value) {
             return '';
           }
-
           return ref.select.state.value.value;
         }
       },
@@ -70,12 +69,13 @@ export default function DeliverymanInput({ ...rest }) {
   return (
     <AsyncSelect
       cacheOptions
-      defaultOptions={recipients}
+      defaultOptions={deliveryman}
       loadOptions={promiseOptions}
       defaultValue={defaultValue}
       placeholder="Entregador exemplo "
-      ref={recipientRef}
+      ref={deliverymanRef}
       classNamePrefix="react-select"
+      noOptionsMessage={() => 'Nenhum entregador encontrado'}
       {...rest}
     />
   );
