@@ -9,7 +9,7 @@
 </h3>
 <h2 align="center"> Overview </h2>
 <h4> The application that was developed is an app for a fictional carrier, FastFeet. </h4>
-<div style="float: left, width: 50%">
+<div style="display: inline-block, width: 150">
     <img alt="Bootcamp GoStack" src="https://user-images.githubusercontent.com/26943148/78579175-e710db80-7806-11ea-8b43-0e55a7fb6e77.png" width="100%" />
     <img alt="Bootcamp GoStack" src="https://user-images.githubusercontent.com/26943148/78579182-e8da9f00-7806-11ea-9ad9-d3ebed21a8db.png" width="100%" />
     <img alt="Bootcamp GoStack" src="https://user-images.githubusercontent.com/26943148/78579176-e7a97200-7806-11ea-8553-e2858a720214.jpg" width="100%" />
