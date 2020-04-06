@@ -21,6 +21,12 @@
     <img alt="Bootcamp GoStack" src="https://user-images.githubusercontent.com/26943148/78579180-e8420880-7806-11ea-94b0-d82a76e3746a.jpg" width="30%" height="20%"/>
     <img alt="Bootcamp GoStack" src="https://user-images.githubusercontent.com/26943148/78579181-e8da9f00-7806-11ea-83e5-183d5e1aa9a7.jpg" width="30%" height="20%"/>
  </div>
+
+ ## Challenges
+[Challenge-01](https://github.com/Rocketseat/bootcamp-gostack-desafio-02)
+[Challenge-02](https://github.com/Rocketseat/bootcamp-gostack-desafio-03)
+[Challenge-03](https://github.com/Rocketseat/bootcamp-gostack-desafio-09)
+[Challenge-04](https://github.com/Rocketseat/bootcamp-gostack-desafio-10)
  
 ## Table of contents
 
@@ -76,10 +82,20 @@
 - [React Native](https://facebook.github.io/react-native/)
 - [react-native-gesture-handler](https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html)
 - [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
+- [React-Navigation](https://reactnavigation.org/docs/getting-started)
+- [unform](https://unform.dev/)
+- [date-fns](https://date-fns.org/)
+- [axios](https://github.com/axios/axios)
+- [Immer](https://github.com/immerjs/immer)
+- [react-native-image-picker](https://github.com/react-native-community/react-native-image-picker)
+- [react-native-paper](https://callstack.github.io/react-native-paper/)
+- [react-native-step-indicator](https://github.com/24ark/react-native-step-indicator)
+- [react-native-tab-view](https://github.com/react-native-community/react-native-tab-view)
+ [Styled Components](https://www.styled-components.com/)
 
 ## Installation
 
-First of all, to run this application you'll need to install [Node.js v10.15](https://nodejs.org) or higher, [Yarn v1.17](https://yarnpkg.com/lang/en/) or higher, [Docker](https://www.docker.com/docker-community), [Genymotion](https://www.genymotion.com/) for emulate device and [Android Studio SDK](https://developer.android.com/studio) on your computer.
+First of all, to run this application you'll need to install [Node.js](https://nodejs.org) or higher, [Yarn](https://yarnpkg.com/lang/en/) or higher, [Docker](https://www.docker.com/docker-community), [Genymotion](https://www.genymotion.com/) for emulate device and [Android Studio SDK](https://developer.android.com/studio) on your computer.
 
 ### How to use:
 
@@ -100,7 +116,7 @@ $ cd FastFeet/backend
 $ yarn install
 
 # Created docker container postgree
-$ docker run --name database -e POSTGRES_PASSWORD=docker -e POSTGRES_DB=meetapp -p 5432:5432 -d postgres
+$ docker run --name database -e POSTGRES_PASSWORD=docker -e POSTGRES_DB=database -p 5432:5432 -d postgres
 
 # Created docker container redis
 $ docker run --name redisbaber -p 6379:6379 -d -t redis:alpine
