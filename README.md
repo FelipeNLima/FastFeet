@@ -23,10 +23,10 @@
  </div>
 
  ## Challenges
-[Challenge-01](https://github.com/Rocketseat/bootcamp-gostack-desafio-02)
-[Challenge-02](https://github.com/Rocketseat/bootcamp-gostack-desafio-03)
-[Challenge-03](https://github.com/Rocketseat/bootcamp-gostack-desafio-09)
-[Challenge-04](https://github.com/Rocketseat/bootcamp-gostack-desafio-10)
+- [Challenge-01](https://github.com/Rocketseat/bootcamp-gostack-desafio-02)
+- [Challenge-02](https://github.com/Rocketseat/bootcamp-gostack-desafio-03)
+- [Challenge-03](https://github.com/Rocketseat/bootcamp-gostack-desafio-09)
+- [Challenge-04](https://github.com/Rocketseat/bootcamp-gostack-desafio-10)
  
 ## Table of contents
 
