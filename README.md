@@ -18,8 +18,8 @@
     <img alt="Bootcamp GoStack" src="https://user-images.githubusercontent.com/26943148/78579179-e8420880-7806-11ea-9652-79765be95e70.jpg" width="30%" />
  </div>
   <div align="left">
-    <img alt="Bootcamp GoStack" src="https://user-images.githubusercontent.com/26943148/78579180-e8420880-7806-11ea-94b0-d82a76e3746a.jpg" width="30%" />
-    <img alt="Bootcamp GoStack" src="https://user-images.githubusercontent.com/26943148/78579181-e8da9f00-7806-11ea-83e5-183d5e1aa9a7.jpg" width="30%" />
+    <img alt="Bootcamp GoStack" src="https://user-images.githubusercontent.com/26943148/78579180-e8420880-7806-11ea-94b0-d82a76e3746a.jpg" width="30%" height="30%"/>
+    <img alt="Bootcamp GoStack" src="https://user-images.githubusercontent.com/26943148/78579181-e8da9f00-7806-11ea-83e5-183d5e1aa9a7.jpg" width="30%" height="30%"/>
  </div>
  
 ## Table of contents
