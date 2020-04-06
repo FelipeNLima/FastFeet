@@ -8,6 +8,7 @@ import RecipientController from './app/controllers/RecipientController';
 import DeliveryManController from './app/controllers/DeliveryManController';
 import OrdersController from './app/controllers/OrdersController';
 import FileController from './app/controllers/FileController';
+import ProblemsController from './app/controllers/ProblemsController';
 import DeliveryProblemController from './app/controllers/DeliveryProblemController';
 import CompletedDeliveries from './app/controllers/CompletedDeliveries';
 import WithdrawController from './app/controllers/WithdrawController';
@@ -54,9 +55,9 @@ routes.put(
 // Informar Problema na Encomenda
 routes.post(
   '/deliveries/:delivery_id/problems',
-  DeliveryProblemController.store
+  ProblemsController.store
 );
-routes.get('/problems/:id', DeliveryProblemController.show);
+routes.get('/deliveries/:delivery_id/problems', DeliveryProblemController.index);
 
 // Verificar a autenticação do admin
 routes.use(authMiddleware);
@@ -82,10 +83,11 @@ routes.delete('/orders/:id', OrdersController.delete);
 routes.get('/orders/:id', OrdersController.show);
 
 // Gestão de Problemas com a Encomenda
-routes.get('/problems', DeliveryProblemController.index);
+routes.get('/problems', ProblemsController.index);
+routes.get('/problems/:id', ProblemsController.show);
 routes.delete(
   '/problems/:id/cancel-delivery',
-  DeliveryProblemController.delete
+  ProblemsController.delete
 );
 
 export default routes;

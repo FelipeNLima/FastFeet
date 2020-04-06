@@ -56,7 +56,7 @@ export default function Orders() {
 
   useEffect(() => {
     loadOrders();
-  }, []);
+  }, [name, page]);
 
 
   async function handleshow(id) {
@@ -68,6 +68,7 @@ export default function Orders() {
       city: response.data.recipient.city,
       state: response.data.recipient.state,
       postalcode: response.data.recipient.postalcode,
+      signature: response.data.signature,
       formatedStartDate: response.data.start_date
         ? format(parseISO(response.data.start_date), 'dd/MM/yyyy', {
           locale: ptBR,
@@ -83,8 +84,7 @@ export default function Orders() {
     handleShow();
   }
 
-  async function handlefilterproblems() {
-    setPage(1);
+  async function handlefilterproblems(page) {
     const response = await api.get('/problems', {
       params: {
         q: name,
@@ -267,7 +267,7 @@ export default function Orders() {
           <strong>Encomendas com problemas</strong>
         </Modal.Header>
         {problems.map(filter => (
-          <Modal.Body>
+          <Modal.Body key={filter.id}>
             <p>{filter.delivery.product} - {filter.description}</p>
           </Modal.Body>
         ))}

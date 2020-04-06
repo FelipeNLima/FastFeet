@@ -24,6 +24,15 @@ class WithdrawController {
         canceled_at: null,
         end_date: null,
       },
+      attributes: [
+        'id',
+        'product',
+        'status',
+        'created_at',
+        'canceled_at',
+        'start_date',
+        'end_date',
+      ],
       include: [
         {
           model: Recipient,
@@ -39,15 +48,6 @@ class WithdrawController {
             'postalcode',
           ],
         },
-      ],
-      attributes: [
-        'id',
-        'product',
-        'status',
-        'created_at',
-        'canceled_at',
-        'start_date',
-        'end_date',
       ],
       limit: 5,
       offset: (page - 1) * 5,

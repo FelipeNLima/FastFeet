@@ -37,7 +37,7 @@ export default function Problems() {
 
   useEffect(() => {
     loadproblems();
-  }, []);
+  }, [name, page]);
 
   async function handleShowProblem(id) {
     const response = await api.get(`/problems/${id}`);

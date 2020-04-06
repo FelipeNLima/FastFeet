@@ -2,7 +2,6 @@ import { produce } from 'immer';
 
 const INITIAL_STATE = {
   order: null,
-  view: null,
   loading: false,
 };
 
@@ -11,7 +10,7 @@ export default function order(state = INITIAL_STATE, action) {
     switch (action.type) {
       case '@order/SHOW_SUCCESS': {
         draft.loading = false;
-        draft.order = action.payload.order;
+        draft.order = action.payload.data;
         break;
       }
       case '@order/SHOW_REQUEST': {

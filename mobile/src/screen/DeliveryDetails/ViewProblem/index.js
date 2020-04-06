@@ -25,7 +25,7 @@ export default function ViewProblem({ route }) {
   const { delivery_id: id, product } = route.params;
 
   async function loadingProblems() {
-    const response = await api.get(`/problems/${id}`);
+    const response = await api.get(`/deliveries/${id}/problems`);
 
     const data = response.data.map((problem) => ({
       ...problem,

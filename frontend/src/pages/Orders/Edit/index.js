@@ -10,7 +10,9 @@ import DeliverymanInput from '~/pages/Orders/InputDeliveryman';
 import { MdChevronLeft, MdCheck } from 'react-icons/md';
 
 import { Container, BackButton, Content, Button, View, ViewProdut } from './styles';
+
 import { updateOrderRequest } from '~/store/modules/order/actions';
+
 import Input from '~/components/Input';
 
 export default function Edit() {
@@ -24,8 +26,9 @@ export default function Edit() {
     product: Yup.string().required('O produto é obrigatório'),
   });
 
+  console.log(orders);
+
   function handleSubmit({
-    id,
     recipient_id,
     deliveryman_id,
     product, }) {

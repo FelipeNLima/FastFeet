@@ -21,11 +21,11 @@ export function* showOrder({ payload }) {
 
     const data = {
       id: response.data.id,
-      recipient: {
+      recipient_id: {
         value: response.data.recipient_id,
         label: response.data.recipient.name,
       },
-      deliveryman: {
+      deliveryman_id: {
         value: response.data.deliveryman_id,
         label: response.data.deliveryman.name,
       },
